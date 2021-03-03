@@ -5,18 +5,20 @@ class API {
   }
 
   async searchAll(query) {
-    const url = `${this.baseURL}/multi?/${this.api_key}/&query=${query}`;
+    const url = `${this.baseURL}search/multi?api_key=${this.api_key}&query=${query}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return data;
+  }
+  async playingnow() {
+    const url = `${this.baseURL}movie/now_playing?api_key=${this.api_key}`
     const res = await fetch(url);
     const data = await res.json();
     return data;
   }
 }
 
-async function apicall() {
-  const res = await fetch('http://api.tvmaze.com/singlesearch/shows?q=avengers');
-  const data = await res.json();
-  return data;
-}
+
 
 async function apicall2() {
   const future = new Date();

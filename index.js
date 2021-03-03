@@ -12,25 +12,56 @@ function splashStartAnimation() {
 
 const api = new API();
 
-function process(obj) {
-  console.log(obj);
-  obj.forEach((multi) => {
-    const imgdiv = document.createElement('div');
-    if (multi.poster_path === null) {
-      imgdiv.innerHTML = '<img src="img/noimg.jpg"/>';
-    } else {
-      imgdiv.innerHTML = `<img src="https://image.tmdb.org/t/p/w500${multi.poster_path}"/>`;
-    }
-    console.log(multi.poster_path);
+function processmovies(obj) {
+  // console.log(obj);
 
-    home.append(imgdiv);
+  const divhold = document.createElement('div')
+  divhold.id = "moviebody"
+  obj.forEach((multi) => {
+    if(multi.media_type === "movie") {
+    const imgdiv = document.createElement('div');
+    imgdiv.id = "moviestemp"
+    if (multi.poster_path === null) {
+      imgdiv.innerHTML = `<img class="movieimg" src="img/noimg.jpg"/>
+                           <div id="movieinfo">
+                           <h2>${multi.title}</h2> 
+                           <h3 class="ratings" >Ratings ${multi.vote_average}</h3>
+                           </div>`;
+    } else {
+      imgdiv.innerHTML = `<img class="movieimg" src="https://image.tmdb.org/t/p/w500${multi.poster_path}"/>
+                          <div id="movieinfo">
+                          <h2>${multi.title}</h2> 
+                          <h3 class="ratings" >Ratings ${multi.vote_average}</h3>
+                          </div>`;
+    }
+    console.log(multi);
+    divhold.append(imgdiv)
+    movies.append(divhold);
+  }
   });
+
+}
+console.log(nowplaying)
+function intheaters(obj) {
+  obj.forEach((now) => { 
+    const imgdiv = document.createElement('div');
+    imgdiv.id = "nowimages"
+    imgdiv.innerHTML = `<img class="nowimg" src="https://image.tmdb.org/t/p/w500${now.poster_path}"/>`
+    nowplaying.append(imgdiv)
+  })
+  console.log(obj)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  api.playingnow().then(data => intheaters(data.results))
   if (false) {
     document.getElementById('splash-screen').style.display = 'flex';
     splashStartAnimation();
     splashEndAnimation();
   }
+   document.getElementById('searchbar').addEventListener('submit',(e) => {
+     movies.innerHTML = ''
+    e.preventDefault()
+    api.searchAll(e.target[0].value).then(data => processmovies(data.results))
+  })
 });
