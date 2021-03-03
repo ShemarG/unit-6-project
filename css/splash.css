@@ -1,0 +1,15 @@
+#splash-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-color: lavender;
+  width: 100vw;
+  height: 100vh;
+  transition: opacity 2s;
+}
+
+#spash-screen .content {
+  opacity: 0;
+}
