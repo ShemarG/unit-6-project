@@ -12,6 +12,21 @@ function splashStartAnimation() {
 
 const api = new API();
 
+function process(obj) {
+  console.log(obj);
+  obj.forEach((multi) => {
+    const imgdiv = document.createElement('div');
+    if (multi.poster_path === null) {
+      imgdiv.innerHTML = '<img src="img/noimg.jpg"/>';
+    } else {
+      imgdiv.innerHTML = `<img src="https://image.tmdb.org/t/p/w500${multi.poster_path}"/>`;
+    }
+    console.log(multi.poster_path);
+
+    home.append(imgdiv);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if (false) {
     document.getElementById('splash-screen').style.display = 'flex';

@@ -27,17 +27,3 @@ async function apicall2() {
   const data = await res.json();
   return data;
 }
-// function fetch() {
-//     apicall()
-//     .then(data => console.log(data))
-// }
-// function process(obj) {
-//     console.log(obj)
-// }
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector('button').addEventListener('click', () => {
-    apicall().then((data) => { console.log(data); });
-    apicall2().then((data) => { console.log(data); });
-  });
-});
