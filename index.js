@@ -10,6 +10,8 @@ function splashStartAnimation() {
   document.querySelector('#splash-screen p').classList.add('animate__animated', 'animate__slideInUp');
 }
 
+const api = new API();
+
 document.addEventListener('DOMContentLoaded', () => {
   if (false) {
     document.getElementById('splash-screen').style.display = 'flex';
