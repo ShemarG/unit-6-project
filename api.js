@@ -2,28 +2,29 @@ class API {
   constructor() {
     this.baseURL = 'https://api.themoviedb.org/3/';
     this.api_key = Api.key;
+    this.upcoming = {};
   }
 
-  async searchAll(query) {
-    const url = `${this.baseURL}/multi?/${this.api_key}/&query=${query}`;
-    const res = await fetch(url);
+  async get(url, options = {}) {
+    const res = await fetch(url, options);
     const data = await res.json();
     return data;
   }
-}
 
-async function apicall() {
-  const res = await fetch('http://api.tvmaze.com/singlesearch/shows?q=avengers');
-  const data = await res.json();
-  return data;
-}
+  searchAll(query) {
+    const url = `${this.baseURL}search/multi?api_key=${this.api_key}&query=${query}`;
+    this.get(url).then((data) => data);
+  }
 
-async function apicall2() {
-  const future = new Date();
-  future.setFullYear(future.getFullYear() + 4);
-  const string = `${future.getFullYear()}-0${future.getMonth() + 1}-0${future.getDate()}`;
-  console.log(string);
-  const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=3503465b6ea7762aefdbd3aec63352b8&language=en-USS&sort_by=release_date.desc&release_date.lte=${string}`);
-  const data = await res.json();
-  return data;
+  getUpcoming(type) {
+    const future = new Date();
+    future.setFullYear(future.getFullYear() + 4);
+    const month = (future.getMonth() + 1) < 10 ? `0${(future.getMonth() + 1)}` : future.getMonth() + 1;
+    const day = (future.getDate() + 1) < 10 ? `0${(future.getDate() + 1)}` : future.getDate() + 1;
+    const string = `${future.getFullYear()}-${month}-${day}`;
+    const url = `${this.baseURL}discover/${type}?api_key=${this.api_key}&sort_by=release_date.desc&release_date.lte=${string}`;
+    this.get(url).then((data) => {
+      this.upcoming[type] = data.results;
+    });
+  }
 }
