@@ -17,6 +17,19 @@
     text-align: left;
     background-color: salmon;
 }
+#infodiv {
+    position: relative;
+}
+#textdiv {
+    background-color: yellow;
+    position: absolute;
+    opacity: 0.7;
+    height: 50vh;
+    width: 20vw;
+    overflow-x: scroll;
+  
+
+}
 
 
 

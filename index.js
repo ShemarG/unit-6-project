@@ -46,8 +46,18 @@ function intheaters(obj) {
   obj.forEach((now) => { 
     const imgdiv = document.createElement('div');
     imgdiv.id = "nowimages"
+    const textdiv = document.createElement('div');
+   textdiv.id = "textdiv"
+   textdiv.innerHTML = `Name ratings buttton to add`
+   const infodiv = document.createElement('div');
+   infodiv.id = "infodiv"
     imgdiv.innerHTML = `<img class="nowimg" src="https://image.tmdb.org/t/p/w500${now.poster_path}"/>`
-    nowplaying.append(imgdiv)
+    imgdiv.addEventListener('mouseover', (e) => {
+        // infodiv.style.opacity = '0.6'
+        // console.log('hoverguys')
+    })
+    infodiv.append(textdiv,imgdiv)
+    nowplaying.append(infodiv)
   })
   console.log(obj)
 }
