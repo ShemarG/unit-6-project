@@ -1,0 +1,9 @@
+.media-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.media-list {
+  display: flex;
+  overflow-x: scroll;
+}

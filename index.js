@@ -40,19 +40,14 @@ function processmovies(obj) {
     }
   });
 }
-function intheaters(obj) {
+function inTheaters(obj) {
   obj.forEach((now) => {
-    nowplaying.append(Renderer.renderMedia(now));
-    // const imgdiv = document.createElement('div');
-    // imgdiv.id = 'nowimages';
-    // imgdiv.innerHTML = `<img class="nowimg" src="https://image.tmdb.org/t/p/w500${now.poster_path}"/>`;
-    // nowplaying.append(imgdiv);
+    document.getElementById('now-playing').append(Renderer.renderMedia(now));
   });
-  console.log(obj);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  api.playingnow().then((data) => intheaters(data.results));
+  api.nowPlaying().then((data) => inTheaters(data.results));
   if (false) {
     document.getElementById('splash-screen').style.display = 'flex';
     splashStartAnimation();

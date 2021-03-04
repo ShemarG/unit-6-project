@@ -16,7 +16,7 @@ class API {
     return data;
   }
 
-  async playingnow() {
+  async nowPlaying() {
     const url = `${this.baseURL}movie/now_playing?api_key=${this.api_key}`;
     const data = await this.get(url);
     return data;
