@@ -2,7 +2,6 @@ class API {
   constructor() {
     this.baseURL = 'https://api.themoviedb.org/3/';
     this.api_key = Api.key;
-    this.upcoming = {};
   }
 
   async get(url, options = {}) {

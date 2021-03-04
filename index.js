@@ -40,13 +40,13 @@ function processmovies(obj) {
     }
   });
 }
-console.log(nowplaying);
 function intheaters(obj) {
   obj.forEach((now) => {
-    const imgdiv = document.createElement('div');
-    imgdiv.id = 'nowimages';
-    imgdiv.innerHTML = `<img class="nowimg" src="https://image.tmdb.org/t/p/w500${now.poster_path}"/>`;
-    nowplaying.append(imgdiv);
+    nowplaying.append(Renderer.renderMedia(now));
+    // const imgdiv = document.createElement('div');
+    // imgdiv.id = 'nowimages';
+    // imgdiv.innerHTML = `<img class="nowimg" src="https://image.tmdb.org/t/p/w500${now.poster_path}"/>`;
+    // nowplaying.append(imgdiv);
   });
   console.log(obj);
 }
