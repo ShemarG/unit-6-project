@@ -1,0 +1,41 @@
+/* Home page now playing */
+#nowplaying {
+    background-color: springgreen;
+    display: flex;
+    width: 100vw;
+    height: 53vh;
+    align-items: center;
+    overflow-x: scroll;
+}
+.nowimg {
+    /* border-radius: 22px; */
+    height: 50vh;
+    width: 20vw;
+    margin-right: 0.2pc;
+}
+#movieinfo {
+    text-align: left;
+    background-color: salmon;
+}
+
+
+
+#moviestemp {
+    display: flex;
+    text-align: right;
+    background-color: blue;
+    width: 49.4vw;
+    border-radius: 22px;
+}
+.movieimg {
+    border-radius: 22px;
+    height: 50vh;
+    width: 20vw;
+
+}
+#moviebody {
+    background-color: red;
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+} 
