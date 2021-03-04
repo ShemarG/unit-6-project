@@ -22,6 +22,23 @@ class API {
     return data;
   }
 
+  async populartv() {
+    const url = `${this.baseURL}tv/popular?api_key=${this.api_key}`;
+    const data = await this.get(url);
+    return data;
+  }
+
+  async tvshowstab() {
+    const url = `${this.baseURL}tv/on_the_air?api_key=${this.api_key}`;
+    const data = await this.get(url);
+    return data;
+  }
+  async network(id) {
+    const url = `${this.baseURL}tv/${id}?api_key=${this.api_key}`;
+    const data = await this.get(url);
+    return data;
+  }
+
   async getUpcoming(type) {
     const future = new Date();
     future.setFullYear(future.getFullYear() + 4);

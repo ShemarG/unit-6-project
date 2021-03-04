@@ -20,6 +20,11 @@
   background-color: black;
 }
 
+/* section for home */
+#populartv {
+    display: flex;
+    overflow-x: scroll;   
+}
 #nowplaying {
     display: flex;
     overflow-x: scroll;
@@ -50,7 +55,7 @@
 
 
 
-#moviestemp {
+.moviestemp {
     display: flex;
     text-align: right;
     background-color: blue;

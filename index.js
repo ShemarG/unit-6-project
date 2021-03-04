@@ -20,7 +20,7 @@ function processmovies(obj) {
   obj.forEach((multi) => {
     if (multi.media_type === 'movie') {
       const imgdiv = document.createElement('div');
-      imgdiv.id = 'moviestemp';
+      imgdiv.classList.add('moviestemp')  ;
       if (multi.poster_path === null) {
         imgdiv.innerHTML = `<img class="movieimg" src="img/noimg.jpg"/>
                            <div id="movieinfo">
@@ -40,7 +40,14 @@ function processmovies(obj) {
     }
   });
 }
+function tvpopular(obj) {
+  console.log(obj)
+  obj.forEach((now) => {
+    populartv.append(Renderer.renderMedia(now))
+  })
+}
 function intheaters(obj) {
+  
   obj.forEach((now) => {
     nowplaying.append(Renderer.renderMedia(now));
     // const imgdiv = document.createElement('div');
@@ -48,11 +55,12 @@ function intheaters(obj) {
     // imgdiv.innerHTML = `<img class="nowimg" src="https://image.tmdb.org/t/p/w500${now.poster_path}"/>`;
     // nowplaying.append(imgdiv);
   });
-  console.log(obj);
+  // console.log(obj);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   api.playingnow().then((data) => intheaters(data.results));
+  api.populartv().then((data) => tvpopular(data.results))
   if (false) {
     document.getElementById('splash-screen').style.display = 'flex';
     splashStartAnimation();
