@@ -15,63 +15,52 @@ const api = new API();
 function processmovies(obj) {
   // console.log(obj);
 
-  const divhold = document.createElement('div')
-  divhold.id = "moviebody"
+  const divhold = document.createElement('div');
+  divhold.id = 'moviebody';
   obj.forEach((multi) => {
-    if(multi.media_type === "movie") {
-    const imgdiv = document.createElement('div');
-    imgdiv.id = "moviestemp"
-    if (multi.poster_path === null) {
-      imgdiv.innerHTML = `<img class="movieimg" src="img/noimg.jpg"/>
+    if (multi.media_type === 'movie') {
+      const imgdiv = document.createElement('div');
+      imgdiv.id = 'moviestemp';
+      if (multi.poster_path === null) {
+        imgdiv.innerHTML = `<img class="movieimg" src="img/noimg.jpg"/>
                            <div id="movieinfo">
-                           <h2>${multi.title}</h2> 
+                           <h2>${multi.title}</h2>
                            <h3 class="ratings" >Ratings ${multi.vote_average}</h3>
                            </div>`;
-    } else {
-      imgdiv.innerHTML = `<img class="movieimg" src="https://image.tmdb.org/t/p/w500${multi.poster_path}"/>
+      } else {
+        imgdiv.innerHTML = `<img class="movieimg" src="https://image.tmdb.org/t/p/w500${multi.poster_path}"/>
                           <div id="movieinfo">
-                          <h2>${multi.title}</h2> 
+                          <h2>${multi.title}</h2>
                           <h3 class="ratings" >Ratings ${multi.vote_average}</h3>
                           </div>`;
+      }
+      console.log(multi);
+      divhold.append(imgdiv);
+      movies.append(divhold);
     }
-    console.log(multi);
-    divhold.append(imgdiv)
-    movies.append(divhold);
-  }
   });
-
 }
-console.log(nowplaying)
 function intheaters(obj) {
-  obj.forEach((now) => { 
-    const imgdiv = document.createElement('div');
-    imgdiv.id = "nowimages"
-    const textdiv = document.createElement('div');
-   textdiv.id = "textdiv"
-   textdiv.innerHTML = `Name ratings buttton to add`
-   const infodiv = document.createElement('div');
-   infodiv.id = "infodiv"
-    imgdiv.innerHTML = `<img class="nowimg" src="https://image.tmdb.org/t/p/w500${now.poster_path}"/>`
-    imgdiv.addEventListener('mouseover', (e) => {
-        // infodiv.style.opacity = '0.6'
-        // console.log('hoverguys')
-    })
-    infodiv.append(textdiv,imgdiv)
-    nowplaying.append(infodiv)
-  })
-  console.log(obj)
+  obj.forEach((now) => {
+    nowplaying.append(Renderer.renderMedia(now));
+    // const imgdiv = document.createElement('div');
+    // imgdiv.id = 'nowimages';
+    // imgdiv.innerHTML = `<img class="nowimg" src="https://image.tmdb.org/t/p/w500${now.poster_path}"/>`;
+    // nowplaying.append(imgdiv);
+  });
+  console.log(obj);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  api.playingnow().then(data => intheaters(data.results))
+  api.playingnow().then((data) => intheaters(data.results));
   if (false) {
     document.getElementById('splash-screen').style.display = 'flex';
     splashStartAnimation();
     splashEndAnimation();
   }
-   document.getElementById('searchbar').addEventListener('submit',(e) => {
-     movies.innerHTML = ''
-    e.preventDefault()
-    api.searchAll(e.target[0].value).then(data => processmovies(data.results))
-  })
+  document.getElementById('searchbar').addEventListener('submit', (e) => {
+    movies.innerHTML = '';
+    e.preventDefault();
+    api.searchAll(e.target[0].value).then((data) => processmovies(data.results));
+  });
 });
