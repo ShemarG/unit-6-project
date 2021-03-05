@@ -7,6 +7,23 @@
   align-items: flex-end;
 }
 .media-img {
+
+  width: 13em;
+}
+
+.media-info {
+  font-size: 0.8em;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  color: white;
+  width: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+/* section for home */
+
+
     /* display: block; */
     width: 100%;
     height: 100%;
@@ -88,6 +105,7 @@
 #infodiv {
     position: relative;
 }
+
 #textdiv {
     background-color: yellow;
     position: absolute;
@@ -95,14 +113,14 @@
     height: 50vh;
     width: 20vw;
     overflow-x: scroll;
-  
-
 }
 
 
-#movies {
+
+/* #movies {
     overflow-y: scroll;
-}
+} */
+
 .moviestemp {
     display: flex;
     text-align: right;

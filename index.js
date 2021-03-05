@@ -1,15 +1,3 @@
-function splashEndAnimation() {
-  setTimeout(() => {
-    document.getElementById('splash-screen').classList.add('animate__zoomOut');
-    setTimeout(() => { document.getElementById('splash-screen').style.display = 'none'; }, 1500);
-  }, 4000);
-}
-
-function splashStartAnimation() {
-  document.querySelector('#splash-screen h1').classList.add('animate__animated', 'animate__slideInDown');
-  document.querySelector('#splash-screen p').classList.add('animate__animated', 'animate__slideInUp');
-}
-
 const api = new API();
 
 function processmovies(obj) {
@@ -20,7 +8,7 @@ function processmovies(obj) {
   obj.forEach((multi) => {
     if (multi.media_type === 'movie') {
       const imgdiv = document.createElement('div');
-      imgdiv.classList.add('moviestemp')  ;
+      imgdiv.classList.add('moviestemp');
       if (multi.poster_path === null) {
         imgdiv.innerHTML = `<img class="movieimg" src="img/noimg.jpg"/>
                            <div id="movieinfo">
@@ -39,18 +27,22 @@ function processmovies(obj) {
     }
   });
 }
-function tvpopular(obj) {
-  // console.log(obj)
-  obj.forEach((now) => {
-    populartv.append(Render.renderMedia(now))
-  })
-}
-function intheaters(obj) {
-  obj.forEach((now) => {
-    nowplaying.append(Render.renderMedia(now));
-  });
 
-}
+
+document.addEventListener('mediaClicked', (e) => { Renderer.renderModal(e.detail); });
+
+// function tvpopular(obj) {
+//   // console.log(obj)
+//   obj.forEach((now) => {
+//     populartv.append(Render.renderMedia(now))
+//   })
+// }
+// function intheaters(obj) {
+//   obj.forEach((now) => {
+//     nowplaying.append(Render.renderMedia(now));
+//   });
+
+// }
 function tvshowtabs(obj) {
     // console.log(obj.networks)
     showstv.append(Renderer.renderMedia(obj));
@@ -86,6 +78,7 @@ function conttv() {
   }
 
 
+
 function resendid(obj) {
   obj.forEach((now) => {
     api.network(now.id)
@@ -93,13 +86,22 @@ function resendid(obj) {
   });
 }
 document.addEventListener('DOMContentLoaded', () => {
-  api.playingnow().then((data) => intheaters(data.results));
-  api.populartv().then((data) => tvpopular(data.results));
+  
+
+  api.movie('now_playing').then((data) => renderList(document.getElementById('now-playing'), data.results));
+  api.tv('popular').then((data) => renderList(document.getElementById('popular-tv'), data.results));
+  
   api.tvshowstab().then((data) => {resendid(data.results); conttv()});
   api.automovie(1).then((data) => {movieautos(data.results); contmovie()})
+  
+
+//   api.playingnow().then((data) => intheaters(data.results));
+//   api.populartv().then((data) => tvpopular(data.results));
+  
  
   // api.automovie2().then((data) => movieautos(data.results))
   if (false) {
+
     document.getElementById('splash-screen').style.display = 'flex';
     splashStartAnimation();
     splashEndAnimation();

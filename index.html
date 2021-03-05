@@ -32,7 +32,6 @@
       <form id="searchbar">
         <input  class="searchinput" type="search" >
       </form>
-
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
@@ -52,10 +51,17 @@
     <section class="page-content">
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="media-sections" id="nowplaying"></div>
-            <div class="media-sections" id="populartv"></div>
+          <div class="media-section">
+            <h1>In Theaters</h1>
+            <div id="now-playing" class="media-list"></div>
+          </div>
+          <div class="media-section">
+            <h1>Popular TV Shows</h1>
+            <div id="popular-tv" class="media-list"></div>
+          </div>
         </div>
         <div class="tab-pane" id="movies" role="tabpanel" aria-labelledby="movies-tab">
+
           <div class="tvshow" id="movieauto"></div>
         </div>
         <div class="tab-pane" id="tv" role="tabpanel" aria-labelledby="tv-tab">
@@ -66,7 +72,16 @@
         </div>
       </div>
     </section>
+    <!-- Modal -->
+    <div class="modal fade" id="media-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered d-flex justify-content-center" role="document">
+        <div id="modal-container" class="modal-content" style="width:auto">
+          <div id="modal-body"></div>
+          <div id="loading-screen">Loading...</div>
+        </div>
+      </div>
+    </div>
   </body>
-
+  <script src="home.js" charset="utf-8"></script>
   <script src="index.js" charset="utf-8"></script>
 </html>
