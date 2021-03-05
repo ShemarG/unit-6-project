@@ -1,15 +1,3 @@
-function splashEndAnimation() {
-  setTimeout(() => {
-    document.getElementById('splash-screen').classList.add('animate__zoomOut');
-    setTimeout(() => { document.getElementById('splash-screen').style.display = 'none'; }, 1500);
-  }, 4000);
-}
-
-function splashStartAnimation() {
-  document.querySelector('#splash-screen h1').classList.add('animate__animated', 'animate__slideInDown');
-  document.querySelector('#splash-screen p').classList.add('animate__animated', 'animate__slideInUp');
-}
-
 const api = new API();
 
 function processmovies(obj) {
@@ -40,23 +28,13 @@ function processmovies(obj) {
     }
   });
 }
-function tvpopular(obj) {
-  console.log(obj);
-  obj.forEach((now) => {
-    document.getElementById('popular-tv').append(Renderer.renderMedia(now));
-  });
-}
-function intheaters(obj) {
-  obj.forEach((now) => {
-    document.getElementById('now-playing').append(Renderer.renderMedia(now));
-  });
-  // console.log(obj);
-}
+
+document.addEventListener('mediaClicked', (e) => { Renderer.renderModal(e.detail); });
 
 document.addEventListener('DOMContentLoaded', () => {
-  api.nowPlaying().then((data) => intheaters(data.results));
-  api.populartv().then((data) => tvpopular(data.results));
-  if (false) {
+  api.movie('now_playing').then((data) => renderList(document.getElementById('now-playing'), data.results));
+  api.tv('popular').then((data) => renderList(document.getElementById('popular-tv'), data.results));
+  if (true) {
     document.getElementById('splash-screen').style.display = 'flex';
     splashStartAnimation();
     splashEndAnimation();

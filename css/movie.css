@@ -22,27 +22,7 @@
 }
 
 /* section for home */
-#populartv {
-    display: flex;
-    overflow-x: scroll;
-}
-#nowplaying {
-    display: flex;
-    overflow-x: scroll;
-}
-.nowimg {
-    /* border-radius: 22px; */
-    height: 50vh;
-    width: 20vw;
-    margin-right: 0.2pc;
-}
-#movieinfo {
-    text-align: left;
-    background-color: salmon;
-}
-#infodiv {
-    position: relative;
-}
+
 #textdiv {
     background-color: yellow;
     position: absolute;
