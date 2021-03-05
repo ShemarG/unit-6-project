@@ -6,8 +6,7 @@
   justify-content: center;
   align-items: flex-end;
 }
-.media-img {
-
+.media img {
   width: 13em;
 }
 
@@ -23,11 +22,6 @@
 
 /* section for home */
 
-
-    /* display: block; */
-    width: 100%;
-    height: 100%;
-}
 .network-airdate {
     margin: 0;
 }

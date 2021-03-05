@@ -28,7 +28,6 @@ function processmovies(obj) {
   });
 }
 
-
 document.addEventListener('mediaClicked', (e) => { Renderer.renderModal(e.detail); });
 
 // function tvpopular(obj) {
@@ -44,64 +43,54 @@ document.addEventListener('mediaClicked', (e) => { Renderer.renderModal(e.detail
 
 // }
 function tvshowtabs(obj) {
-    // console.log(obj.networks)
-    showstv.append(Renderer.renderMedia(obj));
- 
-  //showstv
+  // console.log(obj);
+  const renderedMedia = Renderer.renderMedia(obj, 'tv-media');
+  Renderer.renderHoverState(renderedMedia, obj);
+  showstv.append(renderedMedia);
+
+  // showstv
 }
-let time = 1
+let time = 1;
 function movieautos(obj) {
   obj.forEach((now) => {
-    movieauto.append(Renderer.renderMedia(now))
-  })
-  
+    movieauto.append(Renderer.renderMedia(now));
+  });
 }
 function contmovie() {
-let pages = setInterval(function() {
-  time++
-  api.automovie(time).then((data) => movieautos(data.results))
-}, 100);
-setTimeout(function(){
-  clearInterval(pages)
-}, 600)
+  const pages = setInterval(() => {
+    time++;
+    api.automovie(time).then((data) => movieautos(data.results));
+  }, 100);
+  setTimeout(() => {
+    clearInterval(pages);
+  }, 600);
 }
-let tvtime = 1
+let tvtime = 1;
 function conttv() {
-  let page = setInterval(function() {
-    tvtime++
+  const page = setInterval(() => {
+    tvtime++;
     api.tvshowstab(tvtime).then((data) => resendid(data.results));
     // console.log(tvtime)
   }, 100);
-  setTimeout(function(){
-    clearInterval(page)
-  }, 500)
-  }
-
-
+  setTimeout(() => {
+    clearInterval(page);
+  }, 500);
+}
 
 function resendid(obj) {
   obj.forEach((now) => {
     api.network(now.id)
-    .then(data => tvshowtabs(data))
+      .then((data) => tvshowtabs(data));
   });
 }
 document.addEventListener('DOMContentLoaded', () => {
-  
-
   api.movie('now_playing').then((data) => renderList(document.getElementById('now-playing'), data.results));
   api.tv('popular').then((data) => renderList(document.getElementById('popular-tv'), data.results));
-  
-  api.tvshowstab().then((data) => {resendid(data.results); conttv()});
-  api.automovie(1).then((data) => {movieautos(data.results); contmovie()})
-  
 
-//   api.playingnow().then((data) => intheaters(data.results));
-//   api.populartv().then((data) => tvpopular(data.results));
-  
- 
-  // api.automovie2().then((data) => movieautos(data.results))
+  api.tvshowstab().then((data) => { resendid(data.results); conttv(); });
+  api.automovie(1).then((data) => { movieautos(data.results); contmovie(); });
+
   if (false) {
-
     document.getElementById('splash-screen').style.display = 'flex';
     splashStartAnimation();
     splashEndAnimation();
