@@ -6,29 +6,64 @@
   justify-content: center;
   align-items: flex-end;
 }
-
 .media-img {
-  width: 10em;
+    /* display: block; */
+    width: 100%;
+    height: 100%;
+}
+.nav-item {
+   border-bottom: black;
+}
+.media-info-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: black;
+    font-family: 'Quicksand', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s;
+}
+.media-info-container > * {
+    transform: translateY(20px);
+    transition: transform 0.25s;
+}
+.media-info-container:hover {
+    opacity:1;
+
+}
+
+.media-info-container:hover {
+    transform: translateY(0);
 }
 
 .media-info {
+  width: 100%;
+  font-size: 90%;
+  font-weight: bold;
   display: flex;
   justify-content: center;
-  position: absolute;
+  /* position: absolute; */
   color: white;
-  width: 100%;
-  background-color: black;
+}
+::-webkit-scrollbar {
+    width: 6px; /* remove scrollbar space /
+    background: transparent; / optional: just make scrollbar invisible */
+    background-color: white;
+    padding: 0;
 }
 
 /* section for home */
-#populartv {
-    display: flex;
-    overflow-x: scroll;   
-}
-#nowplaying {
+/* #nowplaying {
     display: flex;
     overflow-x: scroll;
-}
+} */
 .nowimg {
     /* border-radius: 22px; */
     height: 50vh;
@@ -54,7 +89,9 @@
 }
 
 
-
+#movies {
+    overflow-y: scroll;
+}
 .moviestemp {
     display: flex;
     text-align: right;
@@ -68,9 +105,22 @@
     width: 20vw;
 
 }
-#moviebody {
-    background-color: red;
-    display: flex;
-    /* flex-direction: column; */
-    flex-wrap: wrap;
+
+
+/* movie auto */
+#movieauto {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    background-color: black;
+
+}
+/* Tv Shows Page */
+#showstv {
+
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(8, 1fr);
+    /* grid-template-columns: minmax(1, 1fr) 100px; */
+    background-color: black;
+
 }
