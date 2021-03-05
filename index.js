@@ -52,7 +52,7 @@ function intheaters(obj) {
 
 }
 function tvshowtabs(obj) {
-
+    // console.log(obj.networks)
     showstv.append(Renderer.renderMedia(obj));
  
   //showstv
