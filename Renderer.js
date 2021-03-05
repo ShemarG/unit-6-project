@@ -10,7 +10,7 @@ class Renderer {
     // Info
     const info = document.createElement('div');
     info.classList.add('media-info');
-    info.textContent = media.title;
+    info.textContent = media.title || media.name;
     container.append(img, info);
     return container;
   }

@@ -21,6 +21,11 @@
   background-color: rgba(0,0,0,0.5);
 }
 
+/* section for home */
+#populartv {
+    display: flex;
+    overflow-x: scroll;
+}
 #nowplaying {
     display: flex;
     overflow-x: scroll;
@@ -35,8 +40,18 @@
     text-align: left;
     background-color: salmon;
 }
-
-#moviestemp {
+#infodiv {
+    position: relative;
+}
+#textdiv {
+    background-color: yellow;
+    position: absolute;
+    opacity: 0.7;
+    height: 50vh;
+    width: 20vw;
+    overflow-x: scroll;
+}
+.moviestemp {
     display: flex;
     text-align: right;
     background-color: blue;
