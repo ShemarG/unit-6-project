@@ -6,8 +6,8 @@
   justify-content: center;
   align-items: flex-end;
 }
-
 .media-img {
+
   width: 13em;
 }
 
@@ -23,6 +23,89 @@
 
 /* section for home */
 
+
+    /* display: block; */
+    width: 100%;
+    height: 100%;
+}
+.network-airdate {
+    margin: 0;
+}
+.network-img {
+    /* background-size: cover; */
+    height: 60%;
+    width: 100%;
+    margin: 0;
+}
+.network-info {
+    margin: 0;
+}
+
+.media-info-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.808);
+    color: black;
+    font-family: 'Quicksand', sans-serif;
+    display: flex;
+    flex-direction: column;
+    /* align-content: flex-start; */
+    /* justify-content: center; */
+    opacity: 0;
+    transition: opacity 0.25s;
+}
+.media-info-container > * {
+    transform: translateY(20px);
+    transition: transform 0.25s;
+}
+.media-info-container:hover {
+    opacity:1;
+
+}
+
+.media-info-container:hover {
+    transform: translateY(0);
+}
+
+.media-info {
+  width: 100%;
+  /* font-size: 90%; */
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  /* position: absolute; */
+  color: black;
+  margin: 0;
+}
+::-webkit-scrollbar {
+    width: 6px; /* remove scrollbar space /
+    background: transparent; / optional: just make scrollbar invisible */
+    background-color: white;
+    padding: 0;
+}
+
+/* section for home */
+/* #nowplaying {
+    display: flex;
+    overflow-x: scroll;
+} */
+.nowimg {
+    /* border-radius: 22px; */
+    height: 50vh;
+    width: 20vw;
+    margin-right: 0.2pc;
+}
+#movieinfo {
+    text-align: left;
+    background-color: salmon;
+}
+#infodiv {
+    position: relative;
+}
+
 #textdiv {
     background-color: yellow;
     position: absolute;
@@ -31,6 +114,13 @@
     width: 20vw;
     overflow-x: scroll;
 }
+
+
+
+/* #movies {
+    overflow-y: scroll;
+} */
+
 .moviestemp {
     display: flex;
     text-align: right;
@@ -44,9 +134,22 @@
     width: 20vw;
 
 }
-#moviebody {
-    background-color: red;
-    display: flex;
-    /* flex-direction: column; */
-    flex-wrap: wrap;
+
+
+/* movie auto */
+#movieauto {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    background-color: black;
+
+}
+/* Tv Shows Page */
+#showstv {
+
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(8, 1fr);
+    /* grid-template-columns: minmax(1, 1fr) 100px; */
+    background-color: black;
+
 }

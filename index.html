@@ -28,8 +28,9 @@
     </section>
     <header>
       <h1 class="ml-3">ShoStor</h1>
+    <div id="searchnmenu">
       <form id="searchbar">
-        <input type="search" >
+        <input  class="searchinput" type="search" >
       </form>
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
@@ -45,6 +46,7 @@
           <a class="nav-link" id="watchlist" data-toggle="tab" href="#watch" role="tab" aria-controls="watchlist" aria-selected="false">Watchlist</a>
         </li>
       </ul>
+    </div>
     </header>
     <section class="page-content">
       <div class="tab-content" id="myTabContent">
@@ -60,6 +62,7 @@
         </div>
         <div class="tab-pane" id="movies" role="tabpanel" aria-labelledby="movies-tab">
 
+          <div class="tvshow" id="movieauto"></div>
         </div>
         <div class="tab-pane" id="tv" role="tabpanel" aria-labelledby="tv-tab">
           <div class="tvshow" id="showstv"></div>

@@ -32,17 +32,35 @@ class API {
     }
   }
 
-  async searchAll(query) {
-    const url = `${this.baseURL}search/multi?api_key=${this.api_key}&query=${query}`;
+
+//   async searchAll(query) {
+//     const url = `${this.baseURL}search/multi?api_key=${this.api_key}&query=${query}`;
+
+//   async populartv(num) {
+//     const url = `${this.baseURL}tv/popular?api_key=${this.api_key}&page=${num}`;
+
+//     const data = await this.get(url);
+//     return data;
+//   }
+
+  async tvshowstab(num) {
+    const url = `${this.baseURL}tv/on_the_air?api_key=${this.api_key}&page=${num}`;
     const data = await this.get(url);
     return data;
   }
 
-  async tvshowstab() {
-    const url = `${this.baseURL}tv/on_the_air?api_key=${this.api_key}`;
+
+
+  async automovie(num) {
+    const url = `${this.baseURL}movie/popular?api_key=${this.api_key}&page=${num}`;
     const data = await this.get(url);
     return data;
   }
+  // async automovie2() {
+  //   const url = `${this.baseURL}movie/popular?api_key=${this.api_key}&page=2`;
+  //   const data = await this.get(url);
+  //   return data;
+  // }
 
   async network(id) {
     const url = `${this.baseURL}tv/${id}?api_key=${this.api_key}`;
