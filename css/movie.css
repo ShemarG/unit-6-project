@@ -6,9 +6,12 @@
   justify-content: center;
   align-items: flex-end;
 }
-.media img {
+.media-img {
   width: 13em;
 }
+.media-imgs {
+    width: 100%;
+  }
 
 .media-info {
   font-size: 0.8em;
@@ -131,6 +134,16 @@
 
 
 /* movie auto */
+.moviebody {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background-color: black;
+}
+.tvsbody {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background-color: black;
+}
 #movieauto {
     display: grid;
     grid-template-columns: repeat(8, 1fr);

@@ -1,7 +1,9 @@
 function renderList(el, mediaArr) {
-  console.log(mediaArr);
+  // console.log(mediaArr);
   mediaArr.forEach((media) => {
-    el.append(Renderer.renderMedia(media));
+    const movieMedia = Renderer.renderMedia(media)
+    Renderer.renderHoverState(movieMedia, media)
+    el.append(movieMedia);
   });
 }
 

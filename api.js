@@ -32,8 +32,15 @@ class API {
     }
   }
 
-  //   async searchAll(query) {
-  //     const url = `${this.baseURL}search/multi?api_key=${this.api_key}&query=${query}`;
+    async searchAll(endpoint,query) {
+      
+      let data;
+      switch (endpoint) {
+        default:
+          data = await this.get(`${this.baseURL}search/${endpoint}?api_key=${this.api_key}&query=${query}`);
+          return data;
+      }
+    }
 
   //   async populartv(num) {
   //     const url = `${this.baseURL}tv/popular?api_key=${this.api_key}&page=${num}`;
@@ -43,8 +50,8 @@ class API {
   //   }
 
   async tvshowstab(num) {
-    const url = `${this.baseURL}tv/on_the_air?api_key=${this.api_key}&page=${num}`;
-    const data = await this.get(url);
+    const urlshow = `${this.baseURL}tv/on_the_air?api_key=${this.api_key}&page=${num}`;
+    const data = await this.get(urlshow);
     return data;
   }
 

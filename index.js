@@ -1,31 +1,34 @@
 const api = new API();
-
+let Active
 function processmovies(obj) {
   // console.log(obj);
-
+  // const tabControls = document.querySelector('#myTab')
   const divhold = document.createElement('div');
-  divhold.id = 'moviebody';
-  obj.forEach((multi) => {
-    if (multi.media_type === 'movie') {
-      const imgdiv = document.createElement('div');
-      imgdiv.classList.add('moviestemp');
-      if (multi.poster_path === null) {
-        imgdiv.innerHTML = `<img class="movieimg" src="img/noimg.jpg"/>
-                           <div id="movieinfo">
-                           <h2>${multi.title}</h2>
-                           <h3 class="ratings" >Ratings ${multi.vote_average}</h3>
-                           </div>`;
-      } else {
-        imgdiv.innerHTML = `<img class="movieimg" src="https://image.tmdb.org/t/p/w500${multi.poster_path}"/>
-                          <div id="movieinfo">
-                          <h2>${multi.title}</h2>
-                          <h3 class="ratings" >Ratings ${multi.vote_average}</h3>
-                          </div>`;
-      }
-      divhold.append(imgdiv);
+  divhold.classList.add('moviebody')
+  const alt = document.createElement('div');
+  alt.classList.add('tvsbody')
+  console.log(Active)
+  if(Active === 'tv-tab') {
+    obj.forEach((multi) => {
+      if(multi.media_type === "tv") {
+        showstv.innerHTML = ''
+        let movieMedia = Render.renderMedia(multi)
+        Renderer.renderHoverState(movieMedia, multi)
+        alt.append(movieMedia)
+        tv.append(alt);
+      }})
+  }else if(Active === 'movies-tab') {
+    obj.forEach((multi) => {
+      if(multi.media_type !== "tv") {
+        movies.innerHTML = ''
+      let movieMedia = Render.renderMedia(multi)
+      Renderer.renderHoverState(movieMedia, multi)
+      divhold.append(movieMedia)
       movies.append(divhold);
-    }
-  });
+      }
+    })
+  }
+
 }
 
 document.addEventListener('mediaClicked', (e) => { Renderer.renderModal(e.detail); });
@@ -44,7 +47,7 @@ document.addEventListener('mediaClicked', (e) => { Renderer.renderModal(e.detail
 // }
 function tvshowtabs(obj) {
   // console.log(obj);
-  const renderedMedia = Renderer.renderMedia(obj, 'tv-media');
+  const renderedMedia = Render.renderMedia(obj, 'tv-media');
   Renderer.renderHoverState(renderedMedia, obj);
   showstv.append(renderedMedia);
 
@@ -53,7 +56,9 @@ function tvshowtabs(obj) {
 let time = 1;
 function movieautos(obj) {
   obj.forEach((now) => {
-    movieauto.append(Renderer.renderMedia(now));
+    const movieMedia = Render.renderMedia(now)
+    Renderer.renderHoverState(movieMedia, now)
+    movieauto.append(movieMedia);
   });
 }
 function contmovie() {
@@ -78,26 +83,51 @@ function conttv() {
 }
 
 function resendid(obj) {
+  console.log(obj)
   obj.forEach((now) => {
     api.network(now.id)
       .then((data) => tvshowtabs(data));
   });
 }
+function searchHide(input) {
+  let tabs = document.getElementById('searchbar')
+  // console.log(tabs[0])
+  if (input.id === 'movies-tab') {
+    Active = 'movies-tab'
+    tabs.style.opacity = '1'
+    tabs[0].setAttribute("placeholder", "Search Movies")
+  }else if (input.id === 'tv-tab') {
+    Active = 'tv-tab'
+    tabs.style.opacity = '1'
+    tabs[0].setAttribute("placeholder", "Search Tv-Shows")
+  }else if (input.id === 'watchlist') {
+    Active = 'watchlist'
+    tabs.style.opacity = '1'
+    tabs[0].setAttribute("placeholder", "Search Watchlist")
+  }else if(input.id === 'home-tab') {
+    tabs.style.opacity = '0'
+  }
+
+}
 document.addEventListener('DOMContentLoaded', () => {
   api.movie('now_playing').then((data) => renderList(document.getElementById('now-playing'), data.results));
-  api.tv('popular').then((data) => renderList(document.getElementById('popular-tv'), data.results));
+  api.tv('on_the_air').then((data) => renderList(document.getElementById('popular-tv'), data.results));
+ //search bar is display none on home screen
+  let tabControl = document.getElementById('searchbar')
+  tabControl.style.opacity = '0'
 
-  api.tvshowstab().then((data) => { resendid(data.results); conttv(); });
+  api.tv('popular').then((data) => { resendid(data.results); conttv(); });
   api.automovie(1).then((data) => { movieautos(data.results); contmovie(); });
-
+  
+  document.getElementById('myTab').addEventListener('click', (e) => { searchHide(e.target)})
   if (false) {
     document.getElementById('splash-screen').style.display = 'flex';
     splashStartAnimation();
     splashEndAnimation();
   }
   document.getElementById('searchbar').addEventListener('submit', (e) => {
-    movies.innerHTML = '';
+    // movies.innerHTML = '';
     e.preventDefault();
-    api.searchAll(e.target[0].value).then((data) => processmovies(data.results));
+    api.searchAll('multi',e.target[0].value).then((data) => processmovies(data.results));
   });
 });
