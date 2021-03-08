@@ -58,6 +58,15 @@ class API {
     }
   }
 
+  async searchAll(endpoint,query) {  
+    let data;
+    switch (endpoint) {
+      default:
+        data = await this.get(`${this.baseURL}search/${endpoint}?api_key=${this.api_key}&query=${query}`);
+        return data;
+    }
+  }
+
   async discover(type, queryParams = {}) {
     let data;
     switch (type) {

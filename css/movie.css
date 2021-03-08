@@ -133,3 +133,15 @@
     grid-template-columns: repeat(5, 1fr);
     background-color: black;
 }
+/* movie search results */
+.moviebody {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: black;
+}
+/* tvshow search results */
+.tvsbody {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: black;
+}
