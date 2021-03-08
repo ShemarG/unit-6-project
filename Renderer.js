@@ -65,6 +65,7 @@ class Renderer {
   static renderLikeButton(media, type) {
     const listButton = document.createElement('button');
     listButton.textContent = 'test';
+    listButton.classList.add('watchListbtn')
     listButton.addEventListener('click', (e) => {
       e.stopPropagation();
       user.watchList[type][media.id] = media;
