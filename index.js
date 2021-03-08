@@ -1,5 +1,9 @@
 const api = new API();
 api.active = 'home-tab'
+//watchlist 
+function watchlist(obj) {
+  console.log
+}
 function processmovies(obj) {
   const moviegridcont = document.getElementById('movie-grid')
   const tvshowcont = document.getElementById('tv-grid')
