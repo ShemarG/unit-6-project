@@ -8,29 +8,7 @@ header {
   justify-content: space-between;
   z-index: 1;
 }
-.ml-3 {
-  color: antiquewhite;
-}
-#searchnmenu {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-#searchbar {
-  display: flex;
-  justify-content: flex-end;
-  margin-right: .5em;
-  margin-top: .2em;
-}
-.searchinput {
-  border-radius: 22px;
-}
+
 header h1 {
   margin: 0;
-  align-self: center;
-
-}
-#myTab {
-  margin-top: 1.3em;
-
 }

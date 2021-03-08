@@ -1,7 +1,8 @@
-function renderList(el, mediaArr) {
-  console.log(mediaArr);
+function renderList(el, mediaArr, type) {
   mediaArr.forEach((media) => {
-    el.append(Renderer.renderMedia(media));
+    const item = Renderer.renderMedia(media);
+    type === 'movie' ? Renderer.renderMovieHoverState(item, media) : Renderer.renderTVHoverState(item, media);
+    el.append(item);
   });
 }
 

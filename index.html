@@ -19,7 +19,6 @@
     <script src="apikey.js"></script>
     <script src="api.js"></script>
     <!-- Utils -->
-    <script src="Renderer.js" charset="utf-8"></script>
   </head>
   <body>
     <section class="animate__animated" id="splash-screen" style="display: none;">
@@ -28,11 +27,15 @@
     </section>
     <header>
       <h1 class="ml-3">ShoStor</h1>
-    <div id="searchnmenu">
-      <form id="searchbar">
-        <input  class="searchinput" type="search" >
-      </form>
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <div>
+        <div class="input-group mb-1">
+          <span class="input-group-text" style="border-radius: 0.25rem 0 0 0.25rem"> &#128269; </span>
+          <form id="search">
+            <input type="text" class="form-control" placeholder="Search" style="border-radius: 0 0.25rem 0.25rem 0">
+          </form>
+        </div>
+      </div>
+      <ul class="nav nav-tabs" id="page-select" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
         </li>
@@ -46,42 +49,70 @@
           <a class="nav-link" id="watchlist" data-toggle="tab" href="#watch" role="tab" aria-controls="watchlist" aria-selected="false">Watchlist</a>
         </li>
       </ul>
-    </div>
     </header>
     <section class="page-content">
       <div class="tab-content" id="myTabContent">
-        <div class="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="fade tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
           <div class="media-section">
             <h1>In Theaters</h1>
             <div id="now-playing" class="media-list"></div>
           </div>
           <div class="media-section">
-            <h1>Popular TV Shows</h1>
+            <h1>Now Airing</h1>
             <div id="popular-tv" class="media-list"></div>
           </div>
         </div>
-        <div class="tab-pane" id="movies" role="tabpanel" aria-labelledby="movies-tab">
-
-          <div class="tvshow" id="movieauto"></div>
+        <div class="fade tab-pane" id="movies" role="tabpanel" aria-labelledby="movies-tab">
+          <div class="filter-and-sort">
+            <span class="ml-2 mr-2" style="min-width: fit-content;">Sort by:</span>
+            <select id="movie-sort-criteria" class="form-select form-select-lg">
+              <option selected value="popularity.desc">Most Popular</option>
+              <option value="primary_release_date.desc">Release Date</option>
+              <option value="vote_average.desc">TMDB Rating</option>
+            </select>
+            <button style="min-width: fit-content;" class="genre-button mr-2 ml-2" data-type="movie">Select Genres...</button>
+            <span>Genres:</span>
+            <div id="movie-filter-genre-list" class="genre-list">All</div>
+            <button style="min-width: fit-content;" id="movie-filter-submit" class="filter-submit mr-2">Sort & Filter</button>
+          </div>
+          <div class="grid-list" id="movie-grid"></div>
         </div>
-        <div class="tab-pane" id="tv" role="tabpanel" aria-labelledby="tv-tab">
-          <div class="tvshow" id="showstv"></div>
+        <div class="fade tab-pane" id="tv" role="tabpanel" aria-labelledby="tv-tab">
+          <div class="filter-and-sort"></div>
+          <div class="grid-list" id="tv-grid"></div>
         </div>
-        <div class="tab-pane" id="watch" role="tabpanel" aria-labelledby="watchlist">
+        <div class="fade tab-pane" id="watch" role="tabpanel" aria-labelledby="watchlist">
 
         </div>
       </div>
     </section>
-    <!-- Modal -->
-    <div class="modal fade" id="media-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Media Modal -->
+    <div class="modal fade" id="media-modal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered d-flex justify-content-center" role="document">
-        <div id="modal-container" class="modal-content" style="width:auto">
-          <div id="modal-body"></div>
-          <div id="loading-screen">Loading...</div>
+        <div id="media-modal-container" class="modal-content" style="width:auto">
+          <div id="media-modal-body"></div>
+          <div id="media-modal-loading-screen">Loading...</div>
+        </div>
+      </div>
+    </div>
+    <!-- Genre Modal -->
+    <div class="modal fade" id="genre-modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered d-flex justify-content-center" role="document">
+        <div id="genre-modal-container" class="modal-content" style="width:auto">
+          <div class="modal-header">
+           <h5 id="genre-modal-title" class="modal-title"></h5>
+           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+         </div>
+          <div id="genre-modal-body"></div>
+          <div class="modal-footer">
+           <button type="button" class="btn btn-close btn-secondary" data-bs-dismiss="modal">Close</button>
+           <button id="genre-modal-submit" type="button" class="btn btn-primary">Submit</button>
+         </div>
         </div>
       </div>
     </div>
   </body>
+  <script src="Renderer.js" charset="utf-8"></script>
   <script src="home.js" charset="utf-8"></script>
   <script src="index.js" charset="utf-8"></script>
 </html>
