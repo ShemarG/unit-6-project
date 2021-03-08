@@ -27,8 +27,8 @@
     </section>
     <header>
       <h1 class="ml-3">ShoStor</h1>
-      <div style="display: none;">
-        <div class="input-group mb-1">
+      <div>
+        <div class="input-group mb-1" id="searchcont">
           <span class="input-group-text" style="border-radius: 0.25rem 0 0 0.25rem"> &#128269; </span>
           <form id="search">
             <input type="text" class="form-control" placeholder="Search" style="border-radius: 0 0.25rem 0.25rem 0">
@@ -88,7 +88,18 @@
           <div class="grid-list" id="movie-grid"></div>
         </div>
         <div class="fade tab-pane" id="tv" role="tabpanel" aria-labelledby="tv-tab">
-          <div class="filter-and-sort"></div>
+          <div class="filter-and-sort">
+            <span class="ml-2 mr-2" style="min-width: fit-content;">Sort by:</span>
+            <select id="tv-sort-criteria" class="form-select form-select-lg">
+              <option selected value="popularity.desc">Most Popular</option>
+              <option value="primary_release_date.desc">Release Date</option>
+              <option value="vote_average.desc">TMDB Rating</option>
+            </select>
+            <button style="min-width: fit-content;" class="genre-button mr-2 ml-2" data-type="tv">Select Genres...</button>
+            <span>Genres:</span>
+            <div id="tv-filter-genre-list" class="genre-list">All</div>
+            <button style="min-width: fit-content;" id="tv-filter-submit" class="filter-submit mr-2">Sort & Filter</button>
+          </div>
           <div class="grid-list" id="tv-grid"></div>
         </div>
         <div class="fade tab-pane" id="watch" role="tabpanel" aria-labelledby="watchlist">

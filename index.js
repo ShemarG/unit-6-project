@@ -1,5 +1,43 @@
 const api = new API();
+api.active = 'home-tab';
+// watchlist
 
+function processmovies(obj) {
+  const moviegridcont = document.getElementById('movie-grid');
+  const tvshowcont = document.getElementById('tv-grid');
+  if (api.active === 'tv-tab') {
+    tvshowcont.innerHTML = '';
+    renderList(tvshowcont, obj, 'tv');
+  } else if (api.active === 'movie-tab') {
+    moviegridcont.innerHTML = '';
+    renderList(moviegridcont, obj, 'movie');
+  }
+}
+function searchHide(input) {
+  const tabs = document.getElementById('searchcont');
+  const searchopt = document.getElementById('search')[0];
+
+  // console.log(tabs[0])
+  if (input.id === 'movie-tab') {
+    api.active = 'movie-tab';
+    tabs.style.opacity = '1';
+    searchopt.disabled = false;
+    searchopt.setAttribute('placeholder', 'Search Movies');
+  } else if (input.id === 'tv-tab') {
+    api.active = 'tv-tab';
+    tabs.style.opacity = '1';
+    searchopt.disabled = false;
+    searchopt.setAttribute('placeholder', 'Search TV Shows');
+  } else if (input.id === 'watchlist') {
+    api.active = 'watchlist';
+    tabs.style.opacity = '1';
+    searchopt.disabled = false;
+    searchopt.setAttribute('placeholder', 'Search Watchlist');
+  } else if (input.id === 'home-tab') {
+    tabs.style.opacity = '0';
+    searchopt.disabled = true;
+  }
+}
 function genreModalInit() {
   Array.from(document.querySelectorAll('#genre-modal .btn-close')).forEach((el) => {
     el.addEventListener('click', () => {
@@ -38,8 +76,13 @@ genreModalInit();
 
 function initSortAndFilter() {
   Array.from(document.getElementsByClassName('filter-submit')).forEach((button) => {
-    const type = button.id.split('-')[0];
     button.addEventListener('click', () => {
+      let type;
+      if (api.active === 'movies-tab') {
+        type = 'movies';
+      } else if (api.active === 'tv-tab') {
+        type = 'tv';
+      }
       const sortCriteria = document.getElementById(`${type}-sort-criteria`).value;
       const genres = Object.keys(api.genreList[type]).filter((genre) => api.genreList[type][genre].checked === true);
       const options = {
@@ -50,6 +93,7 @@ function initSortAndFilter() {
       type === 'tv' ? options['air_date.gte'] = '' : options['primary_release_date.gte'] = '';
       api.discover(type, Object.assign(api.defaultDiscoverOptions[type], options)).then((data) => {
         document.getElementById(`${type}-grid`).innerHTML = '';
+        console.log(document.getElementById(`${type}-grid`), data.results, type);
         renderList(document.getElementById(`${type}-grid`), data.results, type);
       });
     });
@@ -67,20 +111,6 @@ function scrollToTop() {
       html.scrollTop -= 500;
     }
   }, 10);
-}
-
-function handleNavClick(nav) {
-  const searchBar = document.querySelector('header').querySelector('div');
-  const selected = nav.target.id;
-  if (selected === 'home-tab') {
-    searchBar.style.display = 'none';
-  } else if (selected === 'movie-tab' || selected === 'tv-tab') {
-    searchBar.style.display = 'block';
-  } else {
-    searchBar.style.display = 'none';
-  }
-  api.currentTab = selected;
-  scrollToTop();
 }
 
 function loadMore(type) {
@@ -117,10 +147,6 @@ function defaultRender() {
 document.addEventListener('mediaClicked', (e) => Renderer.renderMediaModal(e.detail));
 
 document.addEventListener('DOMContentLoaded', () => {
-  Array.from(document.getElementsByClassName('nav-link')).forEach((navlink) => {
-    navlink.addEventListener('click', (e) => { handleNavClick(e); });
-  });
-
   api.movie('now_playing').then((data) => {
     let arr = data.results;
     const carouselItems = document.getElementById('now-playing').querySelector('.carousel-inner');
@@ -148,15 +174,22 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   defaultRender();
 
+  const tabControl = document.getElementById('searchcont');
+  tabControl.style.opacity = '0';
+  document.getElementById('search')[0].disabled = true;
+
+  document.getElementById('page-select').addEventListener('click', (e) => { searchHide(e.target); });
+
   if (false) {
     document.getElementById('splash-screen').style.display = 'flex';
     splashStartAnimation();
     splashEndAnimation();
   }
 
-  // document.getElementById('searchbar').addEventListener('submit', (e) => {
-  //   movies.innerHTML = '';
-  //   e.preventDefault();
-  //   api.searchAll(e.target[0].value).then((data) => processmovies(data.results));
-  // });
+  document.getElementById('search').addEventListener('submit', (e) => {
+    // movies.innerHTML = '';
+    e.preventDefault();
+    api.searchAll('multi', e.target[0].value).then((data) => processmovies(data.results));
+    e.target[0].value = '';
+  });
 });
