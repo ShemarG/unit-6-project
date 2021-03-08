@@ -3,6 +3,21 @@ api.active = 'home-tab'
 //watchlist 
 const user = new User();
 
+  let watchBtn = document.getElementsByClassName('watchListbtn')
+
+setTimeout(()=> {
+ let arr = Array.from(watchBtn)
+arr.forEach(btn => {
+addEventListener('click', addToWatchList)
+})
+},2000)
+function addToWatchList() {
+  setTimeout(() => {
+    console.log(user.watchList)
+  }, 1000)
+
+
+}
 function processmovies(obj) {
   const moviegridcont = document.getElementById('movie-grid');
   const tvshowcont = document.getElementById('tv-grid');

@@ -65,6 +65,7 @@ class Renderer {
   static renderLikeButton(media) {
     const listButton = document.createElement('button')
     listButton.textContent = 'test'
+    listButton.classList.add('watchListbtn')
     return listButton
   }
   static renderMovieHoverState(el, movie) {
