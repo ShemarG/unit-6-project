@@ -57,6 +57,32 @@ function initSortAndFilter() {
 }
 initSortAndFilter();
 
+function scrollToTop() {
+  const html = document.querySelector('html');
+  const interval = setInterval(() => {
+    if (html.scrollTop < 500) {
+      html.scrollTop = 0;
+      clearInterval(interval);
+    } else {
+      html.scrollTop -= 500;
+    }
+  }, 10);
+}
+
+function handleNavClick(nav) {
+  const searchBar = document.querySelector('header').querySelector('div');
+  const selected = nav.target.id;
+  if (selected === 'home-tab') {
+    searchBar.style.display = 'none';
+  } else if (selected === 'movie-tab' || selected === 'tv-tab') {
+    searchBar.style.display = 'block';
+  } else {
+    searchBar.style.display = 'none';
+  }
+  api.currentTab = selected;
+  scrollToTop();
+}
+
 function loadMore(type) {
   api.currentQuery[type].page += 1;
   api.discover(type, api.currentQuery[type]).then((data) => {
@@ -85,15 +111,41 @@ function defaultRender() {
       api.maxPage.tv = data.total_pages;
     });
   }
-  api.currentPage.tv = 5;
-  api.currentPage.movie = 5;
+  api.currentTab = 'home-tab';
 }
 
-document.addEventListener('mediaClicked', (e) => { Renderer.renderMediaModal(e.detail); });
+document.addEventListener('mediaClicked', (e) => Renderer.renderMediaModal(e.detail));
 
 document.addEventListener('DOMContentLoaded', () => {
-  api.movie('now_playing').then((data) => renderList(document.getElementById('now-playing'), data.results, 'movie'));
-  api.tv('on_the_air').then((data) => renderList(document.getElementById('popular-tv'), data.results, 'tv'));
+  Array.from(document.getElementsByClassName('nav-link')).forEach((navlink) => {
+    navlink.addEventListener('click', (e) => { handleNavClick(e); });
+  });
+
+  api.movie('now_playing').then((data) => {
+    let arr = data.results;
+    const carouselItems = document.getElementById('now-playing').querySelector('.carousel-inner');
+    let currentCarouselIndex = 0;
+    for (let i = 0; i <= data.results.length; i++) {
+      if (!(i % 5) && i !== 0) {
+        arr = data.results.slice(i - 5, i);
+        renderList(carouselItems.children[currentCarouselIndex], arr, 'movie');
+        currentCarouselIndex += 1;
+      }
+    }
+    // renderList(document.getElementById('now-playing'), data.results, 'movie')
+  });
+  api.tv('on_the_air').then((data) => {
+    let arr = data.results;
+    const carouselItems = document.getElementById('now-airing').querySelector('.carousel-inner');
+    let currentCarouselIndex = 0;
+    for (let i = 0; i <= data.results.length; i++) {
+      if (!(i % 5) && i !== 0) {
+        arr = data.results.slice(i - 5, i);
+        renderList(carouselItems.children[currentCarouselIndex], arr, 'tv');
+        currentCarouselIndex += 1;
+      }
+    }
+  });
   defaultRender();
 
   if (false) {

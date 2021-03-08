@@ -1,4 +1,3 @@
-
 .media-section {
   display: flex;
   flex-direction: column;
@@ -8,13 +7,18 @@
   display: flex;
   overflow-x: scroll;
 }
-/* 
+
+.carousel-item.active, .carousel-item-next, .carousel-item-prev {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+/*
 .home-media {
     display: flex;
     position: relative;
     justify-content: center;
     align-items: flex-end;
-    
+
   }
   .media-imgs {
     width: 100%;
@@ -58,14 +62,13 @@
   }
   #populartv {
     display: flex;
-    overflow-x: scroll;   
+    overflow-x: scroll;
 }
- 
+
   #nowplaying {
-    
+
     display: flex;
     flex-direction: row;
     overflow-x: scroll;
 
 } */
-
