@@ -40,7 +40,7 @@
           <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="movies-tab" data-toggle="tab" href="#movies" role="tab" aria-controls="movies" aria-selected="false">Movies</a>
+          <a class="nav-link" id="movie-tab" data-toggle="tab" href="#movie" role="tab" aria-controls="movies" aria-selected="false">Movies</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="tv-tab" data-toggle="tab" href="#tv" role="tab" aria-controls="tv-shows" aria-selected="false">TV Shows</a>
@@ -51,18 +51,28 @@
       </ul>
     </header>
     <section class="page-content">
-      <div class="tab-content" id="myTabContent">
+      <div class="tab-content">
         <div class="fade tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <div class="media-section">
-            <h1>In Theaters</h1>
-            <div id="now-playing" class="media-list"></div>
+          <h1>In Theaters</h1>
+          <div id="now-playing" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active"></div>
+              <div class="carousel-item"></div>
+              <div class="carousel-item"></div>
+              <div class="carousel-item"></div>
+            </div>
           </div>
-          <div class="media-section">
-            <h1>Now Airing</h1>
-            <div id="popular-tv" class="media-list"></div>
+          <h1>Now Airing</h1>
+          <div id="now-airing" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active"></div>
+              <div class="carousel-item"></div>
+              <div class="carousel-item"></div>
+              <div class="carousel-item"></div>
+            </div>
           </div>
         </div>
-        <div class="fade tab-pane" id="movies" role="tabpanel" aria-labelledby="movies-tab">
+        <div class="fade tab-pane" id="movie" role="tabpanel" aria-labelledby="movies-tab">
           <div class="filter-and-sort">
             <span class="ml-2 mr-2" style="min-width: fit-content;">Sort by:</span>
             <select id="movie-sort-criteria" class="form-select form-select-lg">

@@ -6,14 +6,8 @@
   justify-content: center;
   align-items: flex-end;
 }
-#home .media-img {
-  width: 13em;
-}
-.media-imgs {
-    width: 100%;
-  }
 
-#movies .media-img, #tv .media-img {
+.media-img {
   width: 100%;
 }
 

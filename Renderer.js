@@ -115,29 +115,4 @@ class Renderer {
       loadingScreen.style.display = 'none';
     });
   }
-
-  static renderGenres(type, genres) {
-    console.log(genres);
-    const modalContainer = document.getElementById('genre-modal-container');
-    const modalTitle = document.getElementById('genre-modal-title');
-    modalTitle.textContent = `${type === 'tv' ? 'TV Show' : 'Movie'} Genres`;
-    const modalBody = document.getElementById('genre-modal-body');
-    modalBody.innerHTML = '';
-    Object.keys(genres).forEach((genre, i) => {
-      const checkboxContainer = document.createElement('span');
-      checkboxContainer.classList.add('genre-item');
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.value = genre;
-      checkbox.checked = genres[genre].checked;
-      checkbox.id = `${type}_genre_${i}`;
-      const label = document.createElement('label');
-      label.textContent = genres[genre].name;
-      label.htmlFor = checkbox.id;
-      checkboxContainer.append(checkbox, label);
-      modalBody.append(checkboxContainer);
-    });
-
-    this.modals.genres.show();
-  }
 }

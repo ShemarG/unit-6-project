@@ -4,7 +4,6 @@ class API {
     this.api_key = Api.key;
     this.genreList = {};
     this.currentQuery = { tv: '', movie: '' };
-    this.currentPage = { tv: 0, movie: 0 };
     this.maxPage = { tv: 0, movie: 0 };
     this.defaultDiscoverOptions = {
       tv: {
