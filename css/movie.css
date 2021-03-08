@@ -9,6 +9,9 @@
 #home .media-img {
   width: 13em;
 }
+.media-imgs {
+    width: 100%;
+  }
 
 #movies .media-img, #tv .media-img {
   width: 100%;
