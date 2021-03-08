@@ -45,7 +45,7 @@ function initSortAndFilter() {
       const options = {
         page: 1,
         sort_by: sortCriteria,
-        with_genres: genres.join('')
+        with_genres: genres.join(',')
       };
       type === 'tv' ? options['air_date.gte'] = '' : options['primary_release_date.gte'] = '';
       api.discover(type, Object.assign(api.defaultDiscoverOptions[type], options)).then((data) => {
