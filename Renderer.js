@@ -39,14 +39,14 @@ class Renderer {
 
             network.innerText = `Network: ${data.networks[0].name}`;
             networkImg.src = `${this.getImgSrc(data.networks[0].logo_path)}`;
-            container.append(network, networkImg, currentSeasonAndEp, networkAirDate, this.renderLikeButton());
+            container.append(network, networkImg, currentSeasonAndEp, networkAirDate, this.renderLikeButton(data, 'tv'));
           }
         } else {
           const currentSeason = document.createElement('p');
           currentSeason.classList.add('tv-season-and-ep');
           const season = data.seasons[data.seasons.length - 1].season_number;
           currentSeason.innerText = `Season: ${season}`;
-          container.append(currentSeason, this.renderLikeButton());
+          container.append(currentSeason, this.renderLikeButton(data, 'tv'));
         }
       } else if (data.status === 'Ended' || data.status === 'Canceled') {
         const status = document.createElement('p');
@@ -56,17 +56,18 @@ class Renderer {
         lastSeason.classList.add('tv-season-and-ep');
         const season = data.seasons[data.seasons.length - 1].season_number;
         lastSeason.innerText = `Seasons: ${season}`;
-        container.append(status, lastSeason, this.renderLikeButton());
+        container.append(status, lastSeason, this.renderLikeButton(data, 'tv'));
       }
       el.append(container);
     });
   }
 
-  static renderLikeButton(media) {
+  static renderLikeButton(media, type) {
     const listButton = document.createElement('button');
     listButton.textContent = 'test';
     listButton.addEventListener('click', (e) => {
       e.stopPropagation();
+      user.watchList[type][media.id] = media;
     });
     return listButton;
   }
@@ -85,7 +86,7 @@ class Renderer {
     const votes = document.createElement('p');
     votes.textContent = `Rating: ${movie.vote_average}`;
 
-    container.append(title, release, votes, this.renderLikeButton());
+    container.append(title, release, votes, this.renderLikeButton(movie, 'movie'));
     el.append(container);
   }
 

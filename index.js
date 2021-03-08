@@ -1,6 +1,7 @@
 const api = new API();
 api.active = 'home-tab';
 // watchlist
+const user = new User();
 
 function processmovies(obj) {
   const moviegridcont = document.getElementById('movie-grid');
