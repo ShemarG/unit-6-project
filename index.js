@@ -1,6 +1,6 @@
 const api = new API();
-api.active = 'home-tab'
-//watchlist 
+api.active = 'home-tab';
+// watchlist
 const user = new User();
 
   let watchBtn = document.getElementsByClassName('watchListbtn')

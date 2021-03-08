@@ -39,14 +39,14 @@ class Renderer {
 
             network.innerText = `Network: ${data.networks[0].name}`;
             networkImg.src = `${this.getImgSrc(data.networks[0].logo_path)}`;
-            container.append(network, networkImg, currentSeasonAndEp, networkAirDate,this.renderLikeButton());
+            container.append(network, networkImg, currentSeasonAndEp, networkAirDate, this.renderLikeButton(data, 'tv'));
           }
         } else {
           const currentSeason = document.createElement('p');
           currentSeason.classList.add('tv-season-and-ep');
           const season = data.seasons[data.seasons.length - 1].season_number;
           currentSeason.innerText = `Season: ${season}`;
-          container.append(currentSeason,this.renderLikeButton());
+          container.append(currentSeason, this.renderLikeButton(data, 'tv'));
         }
       } else if (data.status === 'Ended' || data.status === 'Canceled') {
         const status = document.createElement('p');
@@ -56,18 +56,22 @@ class Renderer {
         lastSeason.classList.add('tv-season-and-ep');
         const season = data.seasons[data.seasons.length - 1].season_number;
         lastSeason.innerText = `Seasons: ${season}`;
-        container.append(status, lastSeason,this.renderLikeButton());
+        container.append(status, lastSeason, this.renderLikeButton(data, 'tv'));
       }
       el.append(container);
     });
   }
-  
-  static renderLikeButton(media) {
-    const listButton = document.createElement('button')
-    listButton.textContent = 'test'
-    listButton.classList.add('watchListbtn')
-    return listButton
+
+  static renderLikeButton(media, type) {
+    const listButton = document.createElement('button');
+    listButton.textContent = 'test';
+    listButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      user.watchList[type][media.id] = media;
+    });
+    return listButton;
   }
+
   static renderMovieHoverState(el, movie) {
     const container = document.createElement('div');
     container.classList.add('media-movie-hover');
@@ -82,7 +86,7 @@ class Renderer {
     const votes = document.createElement('p');
     votes.textContent = `Rating: ${movie.vote_average}`;
 
-    container.append(title, release, votes,this.renderLikeButton());
+    container.append(title, release, votes, this.renderLikeButton(movie, 'movie'));
     el.append(container);
   }
 
@@ -110,7 +114,6 @@ class Renderer {
     modalBody.style.display = 'none';
     loadingScreen.style.display = 'block';
     api[media.type](media.id).then((data) => {
-      user.watchList[data.id]= data;
       modalBody.append(this.renderMedia(data, true));
       modalBody.style.display = 'block';
       loadingScreen.style.display = 'none';
