@@ -109,7 +109,7 @@ class Renderer {
     modalBody.style.display = 'none';
     loadingScreen.style.display = 'block';
     api[media.type](media.id).then((data) => {
-      watchlist(data);
+      user.watchList[data.id]= data;
       modalBody.append(this.renderMedia(data, true));
       modalBody.style.display = 'block';
       loadingScreen.style.display = 'none';
