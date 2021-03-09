@@ -277,6 +277,16 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('search').addEventListener('submit', (e) => {
     // movies.innerHTML = '';
     e.preventDefault();
+
+
+    if (api.active === 'tv-tab') {
+      api.searchAll('tv', e.target[0].value).then((data) => processmovies(data.results));
+    } else if (api.active === 'movie-tab') {
+      api.searchAll('movie', e.target[0].value).then((data) => processmovies(data.results));
+    }
+
+
+
     api.searchAll('multi', e.target[0].value).then((data) => processmovies(data.results));
     e.target[0].value = '';
   });
