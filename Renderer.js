@@ -21,7 +21,7 @@ class Renderer {
       if (data.status === 'Returning Series') {
         if (data.next_episode_to_air) {
           const currentSeasonAndEp = document.createElement('p');
-          currentSeasonAndEp.classList.add('tv-season-and-ep');
+          currentSeasonAndEp.classList.add('tv-season-and-ep', 'mt-2');
           const season = data.next_episode_to_air.season_number;
           const episode = data.next_episode_to_air.episode_number;
           currentSeasonAndEp.innerText = `Season: ${season} Epsd: ${episode}`;
@@ -64,7 +64,7 @@ class Renderer {
 
   static renderLikeButton(media, type) {
     const listButton = document.createElement('button');
-    listButton.setAttribute('liked', 'false');
+    listButton.setAttribute('data-liked', 'false');
     const img = document.createElement('img');
     img.src = 'img/heart-unliked.svg';
     img.style.width = '1em';
@@ -73,9 +73,9 @@ class Renderer {
     listButton.addEventListener('click', (e) => {
       e.stopPropagation();
       const icon = e.currentTarget.querySelector('img');
-      const liked = e.currentTarget.getAttribute('liked') === 'true';
+      const liked = e.currentTarget.getAttribute('data-liked') === 'true';
       img.src = liked ? 'img/heart-unliked.svg' : 'img/heart-liked.svg';
-      e.currentTarget.setAttribute('liked', String(!liked));
+      e.currentTarget.setAttribute('data-liked', String(!liked));
       user.watchList[type][media.id] = media;
     });
     return listButton;

@@ -7,30 +7,11 @@ const watchBtn = document.getElementsByClassName('btn');
 
 setTimeout(() => {
   const arr = Array.from(watchBtn);
-  console.log(arr);
   arr.forEach((btn) => {
     btn.addEventListener('click', addToWatchList);
   });
 }, 2000);
 
-// temp
-/*
-function addToWatchList() {
-  setTimeout(() => {
-    console.log(user.watchList.tv)
-    if(Object.keys(user.watchList.movie).length !== 0) {
-      console.log('hey2')
-      renderList(document.getElementById('movieList'),Object.values(user.watchList.movie), 'movie');
-      return user.reset()
-    }else if(Object.keys(user.watchList.tv).length !== 0) {
-      console.log('hey3')
-      renderList(document.getElementById('tvList'), Object.values(user.watchList.tv), 'tv');
-      return user.reset()
-    }else{}
-
-  }, 100)
-
-} */
 function addToWatchList() {
   const local = user.getWatchList();
   const savemovie = user.watchList.movie;
@@ -77,7 +58,6 @@ function searchHide(input) {
   const tabs = document.getElementById('searchcont');
   const searchopt = document.getElementById('search')[0];
   scrollToTop();
-  // console.log(tabs[0])
   if (input.id === 'movie-tab') {
     api.active = 'movie-tab';
     tabs.style.opacity = '1';
@@ -248,7 +228,19 @@ document.addEventListener('DOMContentLoaded', () => {
   tabControl.style.opacity = '0';
   document.getElementById('search')[0].disabled = true;
 
-  document.getElementById('page-select').addEventListener('click', (e) => { searchHide(e.target); });
+  Array.from(document.getElementsByClassName('nav-link')).forEach((nav) => {
+    nav.addEventListener('click', (e) => {
+      const currentOrder = document.querySelector('.nav-link.active');
+      document.getElementById(currentOrder.getAttribute('href').substring(1)).classList.remove('animate__slideInLeft', 'animate__slideInRight');
+      document.getElementById(e.target.getAttribute('href').substring(1)).classList.remove('animate__slideInLeft', 'animate__slideInRight');
+      if (e.target.getAttribute('data-order') > currentOrder.getAttribute('data-order')) {
+        document.getElementById(e.target.getAttribute('href').substring(1)).classList.add('animate__slideInRight');
+      } else {
+        document.getElementById(e.target.getAttribute('href').substring(1)).classList.add('animate__slideInLeft');
+      }
+      searchHide(e.target);
+    });
+  });
 
   if (true) {
     document.getElementById('splash-screen').style.display = 'flex';
@@ -271,16 +263,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   user.reset();
   document.getElementById('search').addEventListener('submit', (e) => {
-    // movies.innerHTML = '';
     e.preventDefault();
-
     if (api.active === 'tv-tab') {
       api.searchAll('tv', e.target[0].value).then((data) => processmovies(data.results));
     } else if (api.active === 'movie-tab') {
       api.searchAll('movie', e.target[0].value).then((data) => processmovies(data.results));
     }
-
-    api.searchAll('multi', e.target[0].value).then((data) => processmovies(data.results));
     e.target[0].value = '';
   });
 });

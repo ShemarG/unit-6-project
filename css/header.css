@@ -11,8 +11,12 @@ header {
 
 header .nav-link {
   border: 0!important;
-  color: white;
+  color: lavender;
   transition: color 0.5s, background-color 0.5s;
+}
+
+header .nav-link.active {
+  background-color: lavender!important;
 }
 
 header .nav-link:hover {
@@ -21,7 +25,7 @@ header .nav-link:hover {
 }
 
 header h1 {
-  color: white;
+  color: lavender;
   margin: 0;
   font-size: 3em;
 }

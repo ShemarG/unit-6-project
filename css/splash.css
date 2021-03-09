@@ -1,10 +1,9 @@
 #splash-screen {
   display: flex;
+  position: absolute;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: sticky;
-  top: 0;
   background-color: lavender;
   width: 100vw;
   height: 100vh;

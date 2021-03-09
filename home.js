@@ -9,7 +9,11 @@ function renderList(el, mediaArr, type) {
 function splashEndAnimation() {
   setTimeout(() => {
     document.getElementById('splash-screen').classList.add('animate__zoomOut');
-    setTimeout(() => { document.getElementById('splash-screen').style.display = 'none'; }, 1500);
+    setTimeout(() => {
+      document.getElementById('splash-screen').style.display = 'none';
+      document.getElementById('page-wrapper').classList.add('animate__zoomIn');
+      document.getElementById('page-wrapper').style.display = 'block';
+    }, 500);
   }, 4000);
 }
 
