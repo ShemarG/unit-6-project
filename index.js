@@ -1,7 +1,71 @@
 const api = new API();
-api.active = 'home-tab';
-// watchlist
+api.active = 'home-tab'
+//watchlist 
+const user = new User();
 
+  let watchBtn = document.getElementsByClassName('btn')
+
+setTimeout(()=> {
+ let arr = Array.from(watchBtn)
+ console.log(arr)
+arr.forEach(btn => {
+btn.addEventListener('click', addToWatchList)
+})
+},2000)
+
+//temp 
+/*
+function addToWatchList() {
+  setTimeout(() => {
+    console.log(user.watchList.tv)
+    if(Object.keys(user.watchList.movie).length !== 0) {
+      console.log('hey2')
+      renderList(document.getElementById('movieList'),Object.values(user.watchList.movie), 'movie');
+      return user.reset()
+    }else if(Object.keys(user.watchList.tv).length !== 0) {
+      console.log('hey3')
+      renderList(document.getElementById('tvList'), Object.values(user.watchList.tv), 'tv');
+      return user.reset()
+    }else{}
+    
+  }, 100)
+
+
+} */
+function addToWatchList() {
+  let local = user.getWatchList()
+  let savemovie = user.watchList.movie
+  const savefile = user.watchList.tv
+  setTimeout(() => {
+    // console.log(user.watchList.tv)
+    if(Object.keys(user.watchList.movie).length !== 0) {
+      console.log(savefile)
+      renderList(document.getElementById('movieList'),Object.values(user.watchList.movie), 'movie');
+      if(local !== null) {
+      user.watchList.movie = local.movie
+      user.watchList.movie[Object.keys(savemovie)] = savemovie[Object.keys(savemovie).join('')]
+      
+    // debugger
+  }
+      user.watchList.tv = local.tv
+      user.setWatchList()
+      return user.reset()
+    }else if(Object.keys(user.watchList.tv).length !== 0) {
+      
+      renderList(document.getElementById('movieList'), Object.values(user.watchList.tv), 'tv');
+      if(local !== null) {
+      user.watchList.tv = local.tv
+      user.watchList.tv[Object.keys(savefile)] = savefile[Object.keys(savefile).join('')]
+      }
+      user.watchList.movie = local.movie
+      user.setWatchList()
+      return user.reset()
+    }else{}
+    
+  }, 100)
+
+
+}
 function processmovies(obj) {
   const moviegridcont = document.getElementById('movie-grid');
   const tvshowcont = document.getElementById('tv-grid');
@@ -16,7 +80,7 @@ function processmovies(obj) {
 function searchHide(input) {
   const tabs = document.getElementById('searchcont');
   const searchopt = document.getElementById('search')[0];
-
+  scrollToTop();
   // console.log(tabs[0])
   if (input.id === 'movie-tab') {
     api.active = 'movie-tab';
@@ -76,10 +140,11 @@ genreModalInit();
 
 function initSortAndFilter() {
   Array.from(document.getElementsByClassName('filter-submit')).forEach((button) => {
+    button.classList.add('btn', 'btn-primary');
     button.addEventListener('click', () => {
       let type;
-      if (api.active === 'movies-tab') {
-        type = 'movies';
+      if (api.active === 'movie-tab') {
+        type = 'movie';
       } else if (api.active === 'tv-tab') {
         type = 'tv';
       }
@@ -121,6 +186,7 @@ function loadMore(type) {
 }
 
 Array.from(document.getElementsByClassName('genre-button')).forEach((button) => {
+  button.classList.add('btn', 'btn-secondary');
   button.addEventListener('click', (e) => {
     Renderer.renderGenres(e.target.dataset.type, api.genreList[e.target.dataset.type]);
   });
@@ -185,7 +251,21 @@ document.addEventListener('DOMContentLoaded', () => {
     splashStartAnimation();
     splashEndAnimation();
   }
-
+//updating userwatchlist
+  let local = user.getWatchList()
+  console.log(local)
+  if(local !== null){
+    user.watchList = local
+  if(Object.keys(local.movie).length !== 0 && Object.keys(local.tv).length !== 0) {
+    renderList(document.getElementById('movieList'),Object.values(local.movie), 'movie');
+    renderList(document.getElementById('movieList'), Object.values(local.tv), 'tv');
+  }else if(Object.keys(local.movie).length !== 0) {
+    renderList(document.getElementById('movieList'),Object.values(local.movie), 'movie');
+  }else if(Object.keys(local.tv).length !== 0) {
+    renderList(document.getElementById('movieList'), Object.values(local.tv), 'tv');
+  }else{}
+  } 
+   user.reset()
   document.getElementById('search').addEventListener('submit', (e) => {
     // movies.innerHTML = '';
     e.preventDefault();

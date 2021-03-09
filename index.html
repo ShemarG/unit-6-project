@@ -35,7 +35,7 @@
           </form>
         </div>
       </div>
-      <ul class="nav nav-tabs" id="page-select" role="tablist">
+      <ul style="border:0;" class="nav nav-tabs" id="page-select" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
         </li>
@@ -72,10 +72,11 @@
             </div>
           </div>
         </div>
+
         <div class="fade tab-pane" id="movie" role="tabpanel" aria-labelledby="movies-tab">
           <div class="filter-and-sort">
             <span class="ml-2 mr-2" style="min-width: fit-content;">Sort by:</span>
-            <select id="movie-sort-criteria" class="form-select form-select-lg">
+            <select id="movie-sort-criteria" class="btn">
               <option selected value="popularity.desc">Most Popular</option>
               <option value="primary_release_date.desc">Release Date</option>
               <option value="vote_average.desc">TMDB Rating</option>
@@ -87,10 +88,11 @@
           </div>
           <div class="grid-list" id="movie-grid"></div>
         </div>
+
         <div class="fade tab-pane" id="tv" role="tabpanel" aria-labelledby="tv-tab">
           <div class="filter-and-sort">
             <span class="ml-2 mr-2" style="min-width: fit-content;">Sort by:</span>
-            <select id="tv-sort-criteria" class="form-select form-select-lg">
+            <select id="tv-sort-criteria" class="btn">
               <option selected value="popularity.desc">Most Popular</option>
               <option value="primary_release_date.desc">Release Date</option>
               <option value="vote_average.desc">TMDB Rating</option>
@@ -103,7 +105,8 @@
           <div class="grid-list" id="tv-grid"></div>
         </div>
         <div class="fade tab-pane" id="watch" role="tabpanel" aria-labelledby="watchlist">
-
+          <div id="movieList" class="mediaList"></div>
+          <div id="tvList" class="mediaList"></div>
         </div>
       </div>
     </section>
@@ -133,6 +136,7 @@
       </div>
     </div>
   </body>
+  <script src="userData.js"></script>
   <script src="Renderer.js" charset="utf-8"></script>
   <script src="home.js" charset="utf-8"></script>
   <script src="index.js" charset="utf-8"></script>

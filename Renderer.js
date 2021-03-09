@@ -39,14 +39,14 @@ class Renderer {
 
             network.innerText = `Network: ${data.networks[0].name}`;
             networkImg.src = `${this.getImgSrc(data.networks[0].logo_path)}`;
-            container.append(network, networkImg, currentSeasonAndEp, networkAirDate, this.renderLikeButton());
+            container.append(network, networkImg, currentSeasonAndEp, networkAirDate, this.renderLikeButton(data, 'tv'));
           }
         } else {
           const currentSeason = document.createElement('p');
           currentSeason.classList.add('tv-season-and-ep');
           const season = data.seasons[data.seasons.length - 1].season_number;
           currentSeason.innerText = `Season: ${season}`;
-          container.append(currentSeason, this.renderLikeButton());
+          container.append(currentSeason, this.renderLikeButton(data, 'tv'));
         }
       } else if (data.status === 'Ended' || data.status === 'Canceled') {
         const status = document.createElement('p');
@@ -56,17 +56,27 @@ class Renderer {
         lastSeason.classList.add('tv-season-and-ep');
         const season = data.seasons[data.seasons.length - 1].season_number;
         lastSeason.innerText = `Seasons: ${season}`;
-        container.append(status, lastSeason, this.renderLikeButton());
+        container.append(status, lastSeason, this.renderLikeButton(data, 'tv'));
       }
       el.append(container);
     });
   }
 
-  static renderLikeButton(media) {
+  static renderLikeButton(media, type) {
     const listButton = document.createElement('button');
-    listButton.textContent = 'test';
+    listButton.setAttribute('liked', 'false');
+    const img = document.createElement('img');
+    img.src = 'img/heart-unliked.svg';
+    img.style.width = '1em';
+    listButton.append(img);
+    listButton.classList.add('btn', 'like-button');
     listButton.addEventListener('click', (e) => {
       e.stopPropagation();
+      const icon = e.currentTarget.querySelector('img');
+      const liked = e.currentTarget.getAttribute('liked') === 'true';
+      img.src = liked ? 'img/heart-unliked.svg' : 'img/heart-liked.svg';
+      e.currentTarget.setAttribute('liked', String(!liked));
+      user.watchList[type][media.id] = media;
     });
     return listButton;
   }
@@ -85,7 +95,7 @@ class Renderer {
     const votes = document.createElement('p');
     votes.textContent = `Rating: ${movie.vote_average}`;
 
-    container.append(title, release, votes, this.renderLikeButton());
+    container.append(title, release, votes, this.renderLikeButton(movie, 'movie'));
     el.append(container);
   }
 
@@ -117,5 +127,30 @@ class Renderer {
       modalBody.style.display = 'block';
       loadingScreen.style.display = 'none';
     });
+  }
+
+  static renderGenres(type, genres) {
+    console.log(genres);
+    const modalContainer = document.getElementById('genre-modal-container');
+    const modalTitle = document.getElementById('genre-modal-title');
+    modalTitle.textContent = `${type === 'tv' ? 'TV Show' : 'Movie'} Genres`;
+    const modalBody = document.getElementById('genre-modal-body');
+    modalBody.innerHTML = '';
+    Object.keys(genres).forEach((genre, i) => {
+      const checkboxContainer = document.createElement('span');
+      checkboxContainer.classList.add('genre-item');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.value = genre;
+      checkbox.checked = genres[genre].checked;
+      checkbox.id = `${type}_genre_${i}`;
+      const label = document.createElement('label');
+      label.textContent = genres[genre].name;
+      label.htmlFor = checkbox.id;
+      checkboxContainer.append(checkbox, label);
+      modalBody.append(checkboxContainer);
+    });
+
+    this.modals.genres.show();
   }
 }
