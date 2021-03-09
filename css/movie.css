@@ -133,7 +133,7 @@
 }
 
 ::-webkit-scrollbar {
-    width: 0.5em;
+    width: 0em;
     background-color: black;
     padding: 0;
 }
