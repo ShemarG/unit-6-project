@@ -1,6 +1,6 @@
 const api = new API();
 api.active = 'home-tab'
-//watchlist 
+//watchlist
 const user = new User();
 
   let watchBtn = document.getElementsByClassName('btn')
@@ -13,7 +13,7 @@ btn.addEventListener('click', addToWatchList)
 })
 },2000)
 
-//temp 
+//temp
 /*
 function addToWatchList() {
   setTimeout(() => {
@@ -27,7 +27,7 @@ function addToWatchList() {
       renderList(document.getElementById('tvList'), Object.values(user.watchList.tv), 'tv');
       return user.reset()
     }else{}
-    
+
   }, 100)
 
 
@@ -44,14 +44,14 @@ function addToWatchList() {
       if(local !== null) {
       user.watchList.movie = local.movie
       user.watchList.movie[Object.keys(savemovie)] = savemovie[Object.keys(savemovie).join('')]
-      
+
     // debugger
   }
       user.watchList.tv = local.tv
       user.setWatchList()
       return user.reset()
     }else if(Object.keys(user.watchList.tv).length !== 0) {
-      
+
       renderList(document.getElementById('movieList'), Object.values(user.watchList.tv), 'tv');
       if(local !== null) {
       user.watchList.tv = local.tv
@@ -61,7 +61,7 @@ function addToWatchList() {
       user.setWatchList()
       return user.reset()
     }else{}
-    
+
   }, 100)
 
 
@@ -160,6 +160,7 @@ function initSortAndFilter() {
         document.getElementById(`${type}-grid`).innerHTML = '';
         console.log(document.getElementById(`${type}-grid`), data.results, type);
         renderList(document.getElementById(`${type}-grid`), data.results, type);
+        scrollToTop();
       });
     });
   });
@@ -211,6 +212,13 @@ function defaultRender() {
 }
 
 document.addEventListener('mediaClicked', (e) => Renderer.renderMediaModal(e.detail));
+
+document.addEventListener('scroll', () => {
+  const htmlScroll = document.querySelector('html');
+  if (htmlScroll.scrollTop === (htmlScroll.offsetHeight - htmlScroll.clientHeight)) {
+    loadMore(`${api.active === 'movie-tab' ? 'movie' : 'tv'}`);
+  }
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   api.movie('now_playing').then((data) => {
@@ -264,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }else if(Object.keys(local.tv).length !== 0) {
     renderList(document.getElementById('movieList'), Object.values(local.tv), 'tv');
   }else{}
-  } 
+  }
    user.reset()
   document.getElementById('search').addEventListener('submit', (e) => {
     // movies.innerHTML = '';

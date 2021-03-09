@@ -99,14 +99,15 @@ class Renderer {
     el.append(container);
   }
 
-  static renderMedia(media, className) {
+  static renderMedia(media, imgOnly) {
     const container = document.createElement('div');
     container.classList.add('media');
-    if (className) container.classList.add(className);
-    container.addEventListener('click', () => {
-      this.modals.media.show();
-      document.dispatchEvent(new CustomEvent('mediaClicked', { detail: { id: media.id, type: media.title ? 'movie' : 'tv' } }));
-    });
+    if (!imgOnly) {
+      container.addEventListener('click', () => {
+        this.modals.media.show();
+        document.dispatchEvent(new CustomEvent('mediaClicked', { detail: { id: media.id, type: media.title ? 'movie' : 'tv' } }));
+      });
+    }
     // Image
     const img = document.createElement('img');
     img.src = media.poster_path ? this.getImgSrc(media.poster_path) : 'img/noimg.jpg';
@@ -123,7 +124,9 @@ class Renderer {
     modalBody.style.display = 'none';
     loadingScreen.style.display = 'block';
     api[media.type](media.id).then((data) => {
-      modalBody.append(this.renderMedia(data, true));
+      const mediaImg = this.renderMedia(data, true);
+      mediaImg.append(this.renderMediaModalInfo(data, media.type));
+      modalBody.append(mediaImg);
       modalBody.style.display = 'block';
       loadingScreen.style.display = 'none';
     });
