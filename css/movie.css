@@ -145,7 +145,7 @@
 .grid-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    background-color: black;
+    background-color: rgb(255, 255, 255);
 }
 /* movie search results */
 .moviebody {

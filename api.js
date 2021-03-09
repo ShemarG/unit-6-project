@@ -57,7 +57,7 @@ class API {
     }
   }
 
-  async searchAll(endpoint,query) {  
+  async searchAll(endpoint, query) {
     let data;
     switch (endpoint) {
       default:
