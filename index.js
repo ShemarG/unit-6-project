@@ -89,8 +89,8 @@ function searchHide(input) {
     searchopt.setAttribute('placeholder', 'Search TV Shows');
   } else if (input.id === 'watchlist') {
     api.active = 'watchlist';
-    tabs.style.opacity = '1';
-    searchopt.disabled = false;
+    tabs.style.opacity = '0';
+    searchopt.disabled = true;
     searchopt.setAttribute('placeholder', 'Search Watchlist');
   } else if (input.id === 'home-tab') {
     tabs.style.opacity = '0';
