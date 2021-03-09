@@ -44,10 +44,10 @@ function addToWatchList() {
       if(local !== null) {
       user.watchList.movie = local.movie
       user.watchList.movie[Object.keys(savemovie)] = savemovie[Object.keys(savemovie).join('')]
-
+       user.watchList.tv = local.tv
     // debugger
   }
-      user.watchList.tv = local.tv
+     
       user.setWatchList()
       return user.reset()
     }else if(Object.keys(user.watchList.tv).length !== 0) {
@@ -56,8 +56,9 @@ function addToWatchList() {
       if(local !== null) {
       user.watchList.tv = local.tv
       user.watchList.tv[Object.keys(savefile)] = savefile[Object.keys(savefile).join('')]
-      }
       user.watchList.movie = local.movie
+      }
+     
       user.setWatchList()
       return user.reset()
     }else{}
