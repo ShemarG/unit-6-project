@@ -5,9 +5,8 @@ const user = new User();
 
 const watchBtn = document.getElementsByClassName('btn');
 
-setTimeout(() => {
+setInterval(() => {
   const arr = Array.from(watchBtn);
-  console.log(arr);
   arr.forEach((btn) => {
     btn.addEventListener('click', addToWatchList);
   });
