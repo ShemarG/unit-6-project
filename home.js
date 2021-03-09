@@ -13,6 +13,7 @@ function splashEndAnimation() {
       document.getElementById('splash-screen').style.display = 'none';
       document.getElementById('page-wrapper').classList.add('animate__zoomIn');
       document.getElementById('page-wrapper').style.display = 'block';
+      setTimeout(() => { document.getElementById('page-wrapper').classList.remove('animate__animated'); }, 1000);
     }, 500);
   }, 4000);
 }
