@@ -64,9 +64,18 @@ class Renderer {
 
   static renderLikeButton(media, type) {
     const listButton = document.createElement('button');
-    listButton.textContent = 'test';
+    listButton.setAttribute('liked', 'false');
+    const img = document.createElement('img');
+    img.src = 'img/heart-unliked.svg';
+    img.style.width = '1em';
+    listButton.append(img);
+    listButton.classList.add('btn', 'like-button');
     listButton.addEventListener('click', (e) => {
       e.stopPropagation();
+      const icon = e.currentTarget.querySelector('img');
+      const liked = e.currentTarget.getAttribute('liked') === 'true';
+      img.src = liked ? 'img/heart-unliked.svg' : 'img/heart-liked.svg';
+      e.currentTarget.setAttribute('liked', String(!liked));
       user.watchList[type][media.id] = media;
     });
     return listButton;
@@ -118,5 +127,30 @@ class Renderer {
       modalBody.style.display = 'block';
       loadingScreen.style.display = 'none';
     });
+  }
+
+  static renderGenres(type, genres) {
+    console.log(genres);
+    const modalContainer = document.getElementById('genre-modal-container');
+    const modalTitle = document.getElementById('genre-modal-title');
+    modalTitle.textContent = `${type === 'tv' ? 'TV Show' : 'Movie'} Genres`;
+    const modalBody = document.getElementById('genre-modal-body');
+    modalBody.innerHTML = '';
+    Object.keys(genres).forEach((genre, i) => {
+      const checkboxContainer = document.createElement('span');
+      checkboxContainer.classList.add('genre-item');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.value = genre;
+      checkbox.checked = genres[genre].checked;
+      checkbox.id = `${type}_genre_${i}`;
+      const label = document.createElement('label');
+      label.textContent = genres[genre].name;
+      label.htmlFor = checkbox.id;
+      checkboxContainer.append(checkbox, label);
+      modalBody.append(checkboxContainer);
+    });
+
+    this.modals.genres.show();
   }
 }

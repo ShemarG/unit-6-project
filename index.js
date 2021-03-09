@@ -17,7 +17,7 @@ function processmovies(obj) {
 function searchHide(input) {
   const tabs = document.getElementById('searchcont');
   const searchopt = document.getElementById('search')[0];
-
+  scrollToTop();
   // console.log(tabs[0])
   if (input.id === 'movie-tab') {
     api.active = 'movie-tab';
@@ -77,10 +77,11 @@ genreModalInit();
 
 function initSortAndFilter() {
   Array.from(document.getElementsByClassName('filter-submit')).forEach((button) => {
+    button.classList.add('btn', 'btn-primary');
     button.addEventListener('click', () => {
       let type;
-      if (api.active === 'movies-tab') {
-        type = 'movies';
+      if (api.active === 'movie-tab') {
+        type = 'movie';
       } else if (api.active === 'tv-tab') {
         type = 'tv';
       }
@@ -122,6 +123,7 @@ function loadMore(type) {
 }
 
 Array.from(document.getElementsByClassName('genre-button')).forEach((button) => {
+  button.classList.add('btn', 'btn-secondary');
   button.addEventListener('click', (e) => {
     Renderer.renderGenres(e.target.dataset.type, api.genreList[e.target.dataset.type]);
   });

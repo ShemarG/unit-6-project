@@ -33,8 +33,13 @@
   top: 6em;
   height: 3em;
   position: sticky;
-  background-color: red;
+  background-color: rgba(255,255,255,0.8);
   z-index: 1;
+}
+
+.filter-and-sort select{
+  background-color: white;
+  border: 1px solid black;
 }
 
 .genre-list {
@@ -69,6 +74,8 @@
 
 .media-movie-title, .media-tv-title {
   text-align: center;
+  font-size: 1em;
+  font-weight: bold;
 }
 
 .media-movie-hover p, .media-tv-hover p {
