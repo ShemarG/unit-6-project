@@ -278,8 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (api.active === 'movie-tab') {
       api.searchAll('movie', e.target[0].value).then((data) => processmovies(data.results));
     }
-
-    api.searchAll('multi', e.target[0].value).then((data) => processmovies(data.results));
     e.target[0].value = '';
   });
 });

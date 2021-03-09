@@ -144,19 +144,19 @@
 .grid-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    background-color: black;
+    background-color: rgb(255, 255, 255);
 }
 /* movie search results */
 .moviebody {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  background-color: black;
+  background-color: rgb(255, 255, 255);
 }
 /* tvshow search results */
 .tvsbody {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  background-color: black;
+  background-color: rgb(255, 255, 255);
 }
 
 /* watch list mediapage */
