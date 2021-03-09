@@ -64,12 +64,17 @@ class Renderer {
 
   static renderLikeButton(media, type) {
     const listButton = document.createElement('button');
+<<<<<<< HEAD
     listButton.setAttribute('liked', 'false');
     const img = document.createElement('img');
     img.src = 'img/heart-unliked.svg';
     img.style.width = '1em';
     listButton.append(img);
     listButton.classList.add('btn', 'like-button');
+=======
+    listButton.textContent = 'test';
+    listButton.classList.add('watchListbtn')
+>>>>>>> bd293408fb3e25d2ca91338e45b184c199fa23d5
     listButton.addEventListener('click', (e) => {
       e.stopPropagation();
       const icon = e.currentTarget.querySelector('img');

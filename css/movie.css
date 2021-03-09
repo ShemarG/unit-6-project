@@ -146,3 +146,20 @@
   grid-template-columns: repeat(4, 1fr);
   background-color: black;
 }
+<<<<<<< HEAD
+=======
+/* watch list mediapage */
+.mediaList {
+  height: 50vh;
+}
+#movieList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* background-color: black; */
+}
+/* #tvList {
+    display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: black;
+} */
+>>>>>>> bd293408fb3e25d2ca91338e45b184c199fa23d5

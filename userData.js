@@ -7,10 +7,13 @@ class User {
     this.watchlist = JSON.parse(localStorage.getItem('userWatchList'));
   }
 
-  setWatchList(obj) {
-    localStorage.setItem('userWatchList', JSON.stringify(obj));
+  setWatchList() {
+    localStorage.setItem('userWatchList', JSON.stringify(this.watchList));
   }
-
+reset() {
+    this.watchList.tv = {}
+    this.watchList.movie = {}
+}
   clearUserData() {
     localStorage.clear();
     this.getWatchList();
