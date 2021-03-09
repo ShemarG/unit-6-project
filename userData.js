@@ -4,7 +4,8 @@ class User {
   }
 
   getWatchList() {
-    this.watchlist = JSON.parse(localStorage.getItem('userWatchList'));
+    return JSON.parse(localStorage.getItem('userWatchList'));
+
   }
 
   setWatchList() {

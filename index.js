@@ -1,18 +1,19 @@
 const api = new API();
-api.active = 'home-tab';
-// watchlist
+api.active = 'home-tab'
+//watchlist
 const user = new User();
 
-const watchBtn = document.getElementsByClassName('watchListbtn');
+  let watchBtn = document.getElementsByClassName('btn')
 
-setTimeout(() => {
-  const arr = Array.from(watchBtn);
-  arr.forEach((btn) => {
-    btn.addEventListener('click', addToWatchList);
-  });
-}, 2000);
+setTimeout(()=> {
+ let arr = Array.from(watchBtn)
+ console.log(arr)
+arr.forEach(btn => {
+btn.addEventListener('click', addToWatchList)
+})
+},2000)
 
-// temp
+//temp
 /*
 function addToWatchList() {
   setTimeout(() => {
@@ -29,20 +30,42 @@ function addToWatchList() {
 
   }, 100)
 
+
 } */
 function addToWatchList() {
+  let local = user.getWatchList()
+  let savemovie = user.watchList.movie
+  const savefile = user.watchList.tv
   setTimeout(() => {
-    console.log(user.watchList.tv);
-    if (Object.keys(user.watchList.movie).length !== 0) {
-      console.log('hey2');
-      renderList(document.getElementById('movieList'), Object.values(user.watchList.movie), 'movie');
-      return user.reset();
-    } if (Object.keys(user.watchList.tv).length !== 0) {
-      console.log('hey3');
+    // console.log(user.watchList.tv)
+    if(Object.keys(user.watchList.movie).length !== 0) {
+      console.log(savefile)
+      renderList(document.getElementById('movieList'),Object.values(user.watchList.movie), 'movie');
+      if(local !== null) {
+      user.watchList.movie = local.movie
+      user.watchList.movie[Object.keys(savemovie)] = savemovie[Object.keys(savemovie).join('')]
+       user.watchList.tv = local.tv
+    // debugger
+  }
+     
+      user.setWatchList()
+      return user.reset()
+    }else if(Object.keys(user.watchList.tv).length !== 0) {
+
       renderList(document.getElementById('movieList'), Object.values(user.watchList.tv), 'tv');
-      return user.reset();
-    }
-  }, 100);
+      if(local !== null) {
+      user.watchList.tv = local.tv
+      user.watchList.tv[Object.keys(savefile)] = savefile[Object.keys(savefile).join('')]
+      user.watchList.movie = local.movie
+      }
+     
+      user.setWatchList()
+      return user.reset()
+    }else{}
+
+  }, 100)
+
+
 }
 function processmovies(obj) {
   const moviegridcont = document.getElementById('movie-grid');
@@ -237,10 +260,34 @@ document.addEventListener('DOMContentLoaded', () => {
     splashStartAnimation();
     splashEndAnimation();
   }
-
+//updating userwatchlist
+  let local = user.getWatchList()
+  console.log(local)
+  if(local !== null){
+    user.watchList = local
+  if(Object.keys(local.movie).length !== 0 && Object.keys(local.tv).length !== 0) {
+    renderList(document.getElementById('movieList'),Object.values(local.movie), 'movie');
+    renderList(document.getElementById('movieList'), Object.values(local.tv), 'tv');
+  }else if(Object.keys(local.movie).length !== 0) {
+    renderList(document.getElementById('movieList'),Object.values(local.movie), 'movie');
+  }else if(Object.keys(local.tv).length !== 0) {
+    renderList(document.getElementById('movieList'), Object.values(local.tv), 'tv');
+  }else{}
+  }
+   user.reset()
   document.getElementById('search').addEventListener('submit', (e) => {
     // movies.innerHTML = '';
     e.preventDefault();
+
+
+    if (api.active === 'tv-tab') {
+      api.searchAll('tv', e.target[0].value).then((data) => processmovies(data.results));
+    } else if (api.active === 'movie-tab') {
+      api.searchAll('movie', e.target[0].value).then((data) => processmovies(data.results));
+    }
+
+
+
     api.searchAll('multi', e.target[0].value).then((data) => processmovies(data.results));
     e.target[0].value = '';
   });
