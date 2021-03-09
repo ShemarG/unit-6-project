@@ -64,17 +64,12 @@ class Renderer {
 
   static renderLikeButton(media, type) {
     const listButton = document.createElement('button');
-<<<<<<< HEAD
     listButton.setAttribute('liked', 'false');
     const img = document.createElement('img');
     img.src = 'img/heart-unliked.svg';
     img.style.width = '1em';
     listButton.append(img);
     listButton.classList.add('btn', 'like-button');
-=======
-    listButton.textContent = 'test';
-    listButton.classList.add('watchListbtn')
->>>>>>> bd293408fb3e25d2ca91338e45b184c199fa23d5
     listButton.addEventListener('click', (e) => {
       e.stopPropagation();
       const icon = e.currentTarget.querySelector('img');
@@ -104,14 +99,15 @@ class Renderer {
     el.append(container);
   }
 
-  static renderMedia(media, className) {
+  static renderMedia(media, imgOnly) {
     const container = document.createElement('div');
     container.classList.add('media');
-    if (className) container.classList.add(className);
-    container.addEventListener('click', () => {
-      this.modals.media.show();
-      document.dispatchEvent(new CustomEvent('mediaClicked', { detail: { id: media.id, type: media.title ? 'movie' : 'tv' } }));
-    });
+    if (!imgOnly) {
+      container.addEventListener('click', () => {
+        this.modals.media.show();
+        document.dispatchEvent(new CustomEvent('mediaClicked', { detail: { id: media.id, type: media.title ? 'movie' : 'tv' } }));
+      });
+    }
     // Image
     const img = document.createElement('img');
     img.src = media.poster_path ? this.getImgSrc(media.poster_path) : 'img/noimg.jpg';
@@ -128,10 +124,106 @@ class Renderer {
     modalBody.style.display = 'none';
     loadingScreen.style.display = 'block';
     api[media.type](media.id).then((data) => {
-      modalBody.append(this.renderMedia(data, true));
+      const mediaImg = this.renderMedia(data, true);
+      mediaImg.append(this.renderMediaModalInfo(data, media.type));
+      modalBody.append(mediaImg);
       modalBody.style.display = 'block';
       loadingScreen.style.display = 'none';
     });
+  }
+
+  static renderMediaModalInfo(media, type) {
+    const container = document.createElement('div');
+    container.classList.add('media-modal-info');
+
+    if (type === 'movie') {
+      const topSection = document.createElement('div');
+      topSection.classList.add('d-flex', 'mt-2', 'justify-content-between');
+
+      const title = document.createElement('span');
+      title.textContent = media.title;
+      title.classList.add('media-modal-title', 'mt-2', 'h3');
+
+      topSection.append(title, this.renderLikeButton(media, type));
+
+      const hr = document.createElement('hr');
+      hr.style.backgroundColor = 'white';
+      hr.style.margin = '0 0 0.5em 0';
+
+      const overview = document.createElement('div');
+      overview.classList.add('media-modal-overview', 'mt-2', 'mb-2');
+      overview.textContent = media.overview;
+
+      const released = document.createElement('span');
+      released.textContent = `Release Date: ${media.release_date}`;
+
+      const duration = document.createElement('span');
+      duration.textContent = `Length: ${Math.floor(media.runtime / 60)}hr ${media.runtime % 60}min`;
+
+      const rating = document.createElement('span');
+      rating.textContent = `Rating: ${media.vote_average} \u2606`;
+
+      const genres = document.createElement('span');
+      genres.textContent = 'Genres: ';
+      media.genres.forEach((genre, i, arr) => {
+        if (i === 0 && arr.length === 1 || i === arr.length - 1) {
+          genres.textContent += `${genre.name} `;
+        } else {
+          genres.textContent += `${genre.name}, `;
+        }
+      });
+
+      container.append(topSection, hr, overview, released, duration, rating, genres);
+      container.classList.add('animate__animated', 'animate__fadeInUp');
+    } else {
+      console.log(media);
+      const topSection = document.createElement('div');
+      topSection.classList.add('d-flex', 'mt-2', 'justify-content-between');
+
+      const title = document.createElement('span');
+      title.textContent = media.name;
+      title.classList.add('media-modal-title', 'mt-2', 'h3');
+
+      topSection.append(title, this.renderLikeButton(media, type));
+
+      const hr = document.createElement('hr');
+      hr.style.backgroundColor = 'white';
+      hr.style.margin = '0 0 0.5em 0';
+
+      const overview = document.createElement('div');
+      overview.classList.add('media-modal-overview', 'mt-2', 'mb-2');
+      overview.textContent = media.overview;
+
+      const status = document.createElement('span');
+      status.textContent = `Current Status: ${media.status}`;
+
+      const airdate = document.createElement('span');
+      const currentSeasonAndEp = document.createElement('span');
+      if (media.next_episode_to_air) {
+        currentSeasonAndEp.textContent = `Season: ${media.next_episode_to_air.season_number} Episode: ${media.next_episode_to_air.episode_number}`;
+        airdate.textContent = `Next episode airing on: ${media.next_episode_to_air.air_date}`;
+      } else {
+        currentSeasonAndEp.textContent = `Seasons: ${media.last_episode_to_air.season_number}`;
+        airdate.textContent = `Last aired: ${media.last_episode_to_air.air_date}`;
+      }
+
+      const rating = document.createElement('span');
+      rating.textContent = `Rating: ${media.vote_average} \u2606`;
+
+      const genres = document.createElement('span');
+      genres.textContent = 'Genres: ';
+      media.genres.forEach((genre, i, arr) => {
+        if (i === 0 && arr.length === 1 || i === arr.length - 1) {
+          genres.textContent += `${genre.name} `;
+        } else {
+          genres.textContent += `${genre.name}, `;
+        }
+      });
+      container.append(topSection, hr, overview, status, currentSeasonAndEp, airdate, rating, genres);
+      container.classList.add('animate__animated', 'animate__fadeInUp');
+    }
+
+    return container;
   }
 
   static renderGenres(type, genres) {

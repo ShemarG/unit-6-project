@@ -1,18 +1,18 @@
 const api = new API();
-api.active = 'home-tab'
-//watchlist 
+api.active = 'home-tab';
+// watchlist
 const user = new User();
 
-  let watchBtn = document.getElementsByClassName('watchListbtn')
+const watchBtn = document.getElementsByClassName('watchListbtn');
 
-setTimeout(()=> {
- let arr = Array.from(watchBtn)
-arr.forEach(btn => {
-btn.addEventListener('click', addToWatchList)
-})
-},2000)
+setTimeout(() => {
+  const arr = Array.from(watchBtn);
+  arr.forEach((btn) => {
+    btn.addEventListener('click', addToWatchList);
+  });
+}, 2000);
 
-//temp 
+// temp
 /*
 function addToWatchList() {
   setTimeout(() => {
@@ -26,27 +26,23 @@ function addToWatchList() {
       renderList(document.getElementById('tvList'), Object.values(user.watchList.tv), 'tv');
       return user.reset()
     }else{}
-    
-  }, 100)
 
+  }, 100)
 
 } */
 function addToWatchList() {
   setTimeout(() => {
-    console.log(user.watchList.tv)
-    if(Object.keys(user.watchList.movie).length !== 0) {
-      console.log('hey2')
-      renderList(document.getElementById('movieList'),Object.values(user.watchList.movie), 'movie');
-      return user.reset()
-    }else if(Object.keys(user.watchList.tv).length !== 0) {
-      console.log('hey3')
+    console.log(user.watchList.tv);
+    if (Object.keys(user.watchList.movie).length !== 0) {
+      console.log('hey2');
+      renderList(document.getElementById('movieList'), Object.values(user.watchList.movie), 'movie');
+      return user.reset();
+    } if (Object.keys(user.watchList.tv).length !== 0) {
+      console.log('hey3');
       renderList(document.getElementById('movieList'), Object.values(user.watchList.tv), 'tv');
-      return user.reset()
-    }else{}
-    
-  }, 100)
-
-
+      return user.reset();
+    }
+  }, 100);
 }
 function processmovies(obj) {
   const moviegridcont = document.getElementById('movie-grid');
@@ -142,6 +138,7 @@ function initSortAndFilter() {
         document.getElementById(`${type}-grid`).innerHTML = '';
         console.log(document.getElementById(`${type}-grid`), data.results, type);
         renderList(document.getElementById(`${type}-grid`), data.results, type);
+        scrollToTop();
       });
     });
   });
@@ -193,6 +190,13 @@ function defaultRender() {
 }
 
 document.addEventListener('mediaClicked', (e) => Renderer.renderMediaModal(e.detail));
+
+document.addEventListener('scroll', () => {
+  const htmlScroll = document.querySelector('html');
+  if (htmlScroll.scrollTop === (htmlScroll.offsetHeight - htmlScroll.clientHeight)) {
+    loadMore(`${api.active === 'movie-tab' ? 'movie' : 'tv'}`);
+  }
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   api.movie('now_playing').then((data) => {

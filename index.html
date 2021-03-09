@@ -53,7 +53,7 @@
     <section class="page-content">
       <div class="tab-content">
         <div class="fade tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <h1>In Theaters</h1>
+          <h1 class="home-title">In Theaters</h1>
           <div id="now-playing" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active"></div>
@@ -62,7 +62,7 @@
               <div class="carousel-item"></div>
             </div>
           </div>
-          <h1>Now Airing</h1>
+          <h1 class="home-title">Now Airing</h1>
           <div id="now-airing" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active"></div>
@@ -111,7 +111,7 @@
       </div>
     </section>
     <!-- Media Modal -->
-    <div class="modal fade" id="media-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div style="overflow-y:hidden;" class="modal fade" id="media-modal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered d-flex justify-content-center" role="document">
         <div id="media-modal-container" class="modal-content" style="width:auto">
           <div id="media-modal-body"></div>
