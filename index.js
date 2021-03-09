@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('page-select').addEventListener('click', (e) => { searchHide(e.target); });
 
-  if (false) {
+  if (true) {
     document.getElementById('splash-screen').style.display = 'flex';
     splashStartAnimation();
     splashEndAnimation();
